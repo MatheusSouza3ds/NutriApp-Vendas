@@ -6,15 +6,14 @@
   <title>NutriCura — +100 receitas, tarefas, planner e gamificação • R$ 15,00</title>
   <meta name="description" content="NutriCura: +100 receitas com filtros por condição e preferências, tarefas diárias, planejador semanal, lista de compras e gamificação. Acesso por R$ 15,00." />
 
-  <!-- Open Graph -->
+  <!-- Open Graph (sem imagens/arquivos externos) -->
   <meta property="og:title" content="NutriCura — +100 receitas, tarefas, planner e gamificação • R$ 15,00" />
   <meta property="og:description" content="Receitas por condição, tarefas e planner para consistência. Visual moderno e leve. Acesso por R$ 15,00." />
   <meta property="og:type" content="website" />
-  <!-- TODO: troque pelo seu domínio (se tiver) -->
-  <meta property="og:url" content="https://seu-dominio.com" />
-  <!-- TODO: troque pela sua imagem OG -->
-  <meta property="og:image" content="https://seu-dominio.com/og-nutricura.png" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <!-- Dica: depois você pode trocar pela URL do seu GitHub Pages -->
+  <meta property="og:url" content="https://matheussouza3ds.github.io/NutriApp-Vendas/" />
+  <!-- Removido og:image pra não depender de arquivo -->
+  <meta name="twitter:card" content="summary" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,9 +39,7 @@
 
   <style>
     :root{
-      /* “Cara do app”: verde + mint + cards arredondados */
       --bg:#F6FAF8;
-      --bg2:#EEF7F3;
       --card:#FFFFFF;
       --text:#0E1A16;
       --muted:#5B6864;
@@ -51,7 +48,6 @@
       --primary:#079669;
       --primary2:#0AA171;
       --mint:#E9FFF7;
-      --mint2:#DDF7EC;
 
       --blue:#2F71EF;
       --orange:#FF8A34;
@@ -254,31 +250,45 @@
       align-items:center;
     }
 
-    /* Mock / prova visual (parece app, mas é só imagem) */
+    /* “Mock” do app (sem imagem) */
     .device{
       position:relative;
       border-radius: 28px;
-      background: linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.40));
+      background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.45));
       border: 1px solid rgba(14,26,22,.12);
       box-shadow: var(--shadow);
       padding: 14px;
       overflow:hidden;
-    }
-    .device:before{
-      content:"";
-      position:absolute; inset:-40px -80px auto auto;
-      width:220px; height:220px;
-      background: radial-gradient(circle at 30% 30%, rgba(10,161,113,.18), transparent 65%);
-      transform: rotate(18deg);
-      pointer-events:none;
+      min-height: 420px;
     }
     .screen{
       border-radius: 22px;
       overflow:hidden;
       border: 1px solid rgba(14,26,22,.12);
       background: #fff;
+      padding: 14px;
     }
-    .screen img{width:100%; height:auto; display:block}
+    .mockTop{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; padding-bottom:10px; border-bottom:1px solid var(--border);
+    }
+    .mockTop .chip{
+      padding:7px 10px; border-radius:999px; font-weight:900; font-size:12px;
+      background: var(--mint); border:1px solid rgba(7,150,105,.20);
+      color: color-mix(in srgb, var(--primary) 80%, black);
+    }
+    .mockCards{
+      display:grid; gap:10px; margin-top:12px;
+    }
+    .mcard{
+      border:1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.06);
+      background: linear-gradient(180deg, rgba(233,255,247,.6), rgba(255,255,255,1));
+    }
+    .mcard strong{display:block; font-size:13px}
+    .mcard span{display:block; margin-top:6px; color:var(--muted); font-weight:800; font-size:12px; line-height:1.4}
     .floaters{
       position:absolute; left:14px; right:14px; bottom:14px;
       display:flex; gap:10px; flex-wrap:wrap;
@@ -364,6 +374,7 @@
       color: var(--muted);
       font-size: 12px;
       line-height: 1.45;
+      font-weight:800;
     }
     .accent-blue:before{background: var(--blue)}
     .accent-orange:before{background: var(--orange)}
@@ -395,52 +406,9 @@
       margin-bottom: 10px;
     }
     .step strong{display:block; font-size: 14px; letter-spacing:-.01em}
-    .step p{margin:8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5}
+    .step p{margin:8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; font-weight:800}
 
-    /* Galeria (scroll-snap) */
-    .gallery{
-      display:grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(260px, 1fr);
-      gap: 12px;
-      overflow-x:auto;
-      padding-bottom: 6px;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-    }
-    .shot{
-      scroll-snap-align: start;
-      border:1px solid var(--border);
-      background: var(--card);
-      border-radius: 22px;
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-      cursor: pointer;
-    }
-    .shot img{width:100%; height:auto; display:block}
-    .shot .cap{
-      padding: 10px 12px;
-      border-top: 1px solid var(--border);
-      font-weight: 900;
-      font-size: 13px;
-      color: var(--text);
-    }
-    .shot .cap span{
-      display:block;
-      margin-top: 4px;
-      font-weight: 800;
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-    .hint{
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    /* Depoimentos (placeholders) */
+    /* Depoimentos */
     .quotes{display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:12px; margin-top: 12px}
     .quote{
       border:1px solid var(--border);
@@ -453,7 +421,7 @@
     .quote p{margin:10px 0 0; color: var(--muted); font-size: 12px; line-height: 1.55; font-weight: 800}
     .quote .who{margin-top:12px; font-weight: 900; font-size: 12px}
 
-    /* Preço (1 plano — R$15) */
+    /* Preço */
     .pricingWrap{
       display:grid;
       grid-template-columns: 1.2fr .8fr;
@@ -587,43 +555,6 @@
       font-size: 11px;
     }
 
-    /* Lightbox */
-    .lightbox{
-      position: fixed; inset: 0;
-      display:none;
-      z-index: 100;
-    }
-    .lightbox.open{display:block}
-    .lb-backdrop{
-      position:absolute; inset:0;
-      background: rgba(0,0,0,.55);
-    }
-    .lb-dialog{
-      position:relative;
-      height:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 18px;
-    }
-    .lb-panel{
-      max-width: 980px;
-      width: 100%;
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.92);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .lb-head{
-      display:flex; align-items:center; justify-content:space-between; gap: 10px;
-      padding: 10px 12px;
-      border-bottom: 1px solid rgba(0,0,0,.08);
-    }
-    .lb-head strong{font-size: 13px}
-    .lb-img{width:100%; height:auto; display:block; background:#fff}
-
     /* Responsive */
     @media (max-width: 980px){
       nav.links{display:none}
@@ -640,7 +571,6 @@
     @media (max-width: 520px){
       h1{font-size: 34px}
       .grid3{grid-template-columns: 1fr}
-      .gallery{grid-auto-columns: minmax(240px, 1fr)}
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -652,15 +582,13 @@
 <body>
   <a class="sr-only" href="#conteudo">Pular para o conteúdo</a>
 
-  <!-- CONFIG (mude aqui se quiser) -->
+  <!-- CONFIG -->
   <script>
-    // ✅ Link de compra que você mandou:
     window.NUTRICURA_BUY_URL = "https://nutri-cura-app.vercel.app/";
-    // ✅ Preço exibido:
     window.NUTRICURA_PRICE = "R$ 15,00";
   </script>
 
-  <!-- Barra anúncio (vendas) -->
+  <!-- Barra anúncio -->
   <div class="announce" id="announce">
     <div class="container">
       <div class="announce-inner">
@@ -687,7 +615,7 @@
         <nav class="links" aria-label="Navegação">
           <a href="#beneficios">Benefícios</a>
           <a href="#como">Como funciona</a>
-          <a href="#por-dentro">Por dentro</a>
+          <a href="#prova">Prova social</a>
           <a href="#preco">Preço</a>
           <a href="#faq">FAQ</a>
         </nav>
@@ -703,7 +631,7 @@
         <div class="box">
           <a class="btn" href="#beneficios">Benefícios</a>
           <a class="btn" href="#como">Como funciona</a>
-          <a class="btn" href="#por-dentro">Por dentro</a>
+          <a class="btn" href="#prova">Prova social</a>
           <a class="btn" href="#preco">Preço</a>
           <a class="btn" href="#faq">FAQ</a>
           <a class="btn btn-primary" data-buy href="#">Comprar agora</a>
@@ -731,7 +659,7 @@
 
           <div class="cta">
             <a class="btn btn-primary" data-buy href="#">Comprar agora</a>
-            <a class="btn btn-soft" href="#por-dentro">Ver telas</a>
+            <a class="btn btn-soft" href="#como">Como funciona</a>
             <span class="priceTag" aria-label="Preço">
               <span class="big" id="priceHero">R$ 15,00</span>
               <span class="small">preço promocional</span>
@@ -745,17 +673,32 @@
             <span class="pill">🏅 XP, coins & badges</span>
           </div>
 
-          <p class="hint" style="max-width:85ch">
-            <b>Aviso importante:</b> NutriCura é ferramenta de apoio e organização. Não substitui acompanhamento médico/nutricional.
-            Para sintomas persistentes ou orientações clínicas, procure um profissional.
+          <p class="pill" style="margin-top:12px; box-shadow:none; background:transparent">
+            <b>Aviso:</b> ferramenta de apoio e organização. Não substitui acompanhamento médico/nutricional.
           </p>
         </div>
 
-        <!-- Prova visual (só imagem, para vender) -->
-        <div class="device" aria-label="Prévia do NutriCura">
-          <!-- ✅ Troque por uma screenshot real do seu app -->
+        <!-- Mock visual sem imagem -->
+        <div class="device" aria-label="Prévia do NutriCura (mock)">
           <div class="screen">
-            <img src="assets/nc-hero.png" alt="Prévia do app NutriCura (exemplo)" loading="lazy">
+            <div class="mockTop">
+              <div class="chip">Painel do dia</div>
+              <div class="chip" style="background:rgba(47,113,239,.10); border-color:rgba(47,113,239,.22); color:#1F4FB4;">Planner</div>
+            </div>
+            <div class="mockCards">
+              <div class="mcard">
+                <strong>Receitas por condição</strong>
+                <span>Filtre por refluxo, hipertensão, diabetes tipo 2 e preferências.</span>
+              </div>
+              <div class="mcard">
+                <strong>Tarefas rápidas</strong>
+                <span>Micro-hábitos por categorias: corpo, mente, alimentação e plano.</span>
+              </div>
+              <div class="mcard">
+                <strong>Recompensas</strong>
+                <span>Ganhe XP, coins e badges para manter consistência sem pressão.</span>
+              </div>
+            </div>
           </div>
           <div class="floaters" aria-hidden="true">
             <span class="floater"><i>🍽️</i> +100 receitas</span>
@@ -771,10 +714,9 @@
       <div class="container">
         <div class="sec-head">
           <div>
-            <h2>Benefícios (do jeito que vende)</h2>
+            <h2>Benefícios</h2>
             <p class="subhead">
-              Aqui é landing page: benefícios claros, linguagem simples e visual consistente com o app.
-              Sem “funcionalidade de app” no site — só o que ajuda a converter.
+              Benefícios claros, linguagem simples e visual consistente — sem complicar.
             </p>
           </div>
           <span class="pill"><span class="dot"></span> Visual moderno</span>
@@ -792,7 +734,7 @@
           <div class="card fcard accent-blue">
             <div class="f-top">
               <strong>Cards que guiam</strong>
-              <span class="badge" style="background:color-mix(in srgb, var(--blue) 10%, #fff); border-color:color-mix(in srgb, var(--blue) 25%, rgba(0,0,0,.08)); color:color-mix(in srgb, var(--blue) 80%, black);">UI/UX</span>
+              <span class="badge" style="background:rgba(47,113,239,.10); border-color:rgba(47,113,239,.22); color:#1F4FB4;">UI/UX</span>
             </div>
             <p>Hierarquia visual clara e rápida: menos dúvida, mais ação (o design “puxa” você para concluir).</p>
           </div>
@@ -800,7 +742,7 @@
           <div class="card fcard accent-yellow">
             <div class="f-top">
               <strong>Planner + lista de compras</strong>
-              <span class="badge" style="background:color-mix(in srgb, var(--yellow) 18%, #fff); border-color:color-mix(in srgb, var(--yellow) 35%, rgba(0,0,0,.08)); color:color-mix(in srgb, #000 70%, var(--muted));">Prático</span>
+              <span class="badge" style="background:rgba(245,200,75,.18); border-color:rgba(245,200,75,.35); color:#3B3420;">Prático</span>
             </div>
             <p>Planeje refeições e tenha lista pronta para compras. Menos decisão, mais execução.</p>
           </div>
@@ -808,7 +750,7 @@
           <div class="card fcard accent-orange">
             <div class="f-top">
               <strong>Gamificação leve</strong>
-              <span class="badge" style="background:color-mix(in srgb, var(--orange) 12%, #fff); border-color:color-mix(in srgb, var(--orange) 28%, rgba(0,0,0,.08)); color:color-mix(in srgb, var(--orange) 85%, black);">Engaja</span>
+              <span class="badge" style="background:rgba(255,138,52,.12); border-color:rgba(255,138,52,.28); color:#8A3D07;">Engaja</span>
             </div>
             <p>XP, coins, streak e badges: motivação positiva para manter consistência sem pressão.</p>
           </div>
@@ -824,7 +766,7 @@
           <div class="card fcard accent-blue">
             <div class="f-top">
               <strong>Organização sem complicar</strong>
-              <span class="badge" style="background:color-mix(in srgb, var(--blue) 10%, #fff); border-color:color-mix(in srgb, var(--blue) 25%, rgba(0,0,0,.08)); color:color-mix(in srgb, var(--blue) 80%, black);">Simples</span>
+              <span class="badge" style="background:rgba(47,113,239,.10); border-color:rgba(47,113,239,.22); color:#1F4FB4;">Simples</span>
             </div>
             <p>O app te “puxa” para o próximo passo: o que fazer hoje, o que comer agora, o que comprar.</p>
           </div>
@@ -838,7 +780,7 @@
         <div class="sec-head">
           <div>
             <h2>Como funciona</h2>
-            <p class="subhead">Três passos (curtos) para o usuário entender rápido e comprar.</p>
+            <p class="subhead">Três passos curtos para entender e comprar.</p>
           </div>
           <span class="pill"><span class="dot"></span> Direto ao ponto</span>
         </div>
@@ -847,7 +789,7 @@
           <div class="step">
             <div class="n">1</div>
             <strong>Escolha sua trilha</strong>
-            <p>Filtre receitas e sugestões por condição e preferências (ex.: vegano, sem glúten, tempo de preparo).</p>
+            <p>Filtre receitas e sugestões por condição e preferências (vegano, sem glúten, tempo de preparo).</p>
           </div>
           <div class="step">
             <div class="n">2</div>
@@ -861,10 +803,6 @@
           </div>
         </div>
 
-        <div class="hint">
-          CTA recomendado: “Comprar agora” logo abaixo (para quem já decidiu).
-        </div>
-
         <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
           <a class="btn btn-primary" data-buy href="#">Comprar por <span id="priceMid">R$ 15,00</span></a>
           <a class="btn btn-soft" href="#preco">Ver o que inclui</a>
@@ -872,61 +810,13 @@
       </div>
     </section>
 
-    <!-- POR DENTRO -->
-    <section id="por-dentro">
-      <div class="container">
-        <div class="sec-head">
-          <div>
-            <h2>Por dentro do NutriCura</h2>
-            <p class="subhead">
-              Prova visual converte. Use screenshots reais do seu app (as que você já tem) e pronto.
-              (Arraste para o lado no celular.)
-            </p>
-          </div>
-          <span class="pill"><span class="dot"></span> Prova visual</span>
-        </div>
-
-        <div class="gallery" aria-label="Galeria de telas">
-          <!-- ✅ Troque os arquivos em /assets pelos seus prints -->
-          <figure class="shot" data-title="Painel do dia">
-            <img src="assets/nc-dashboard.png" alt="Tela de painel do dia do NutriCura" loading="lazy">
-            <figcaption class="cap">Painel do dia <span>Resumo, hidratação e sensação de progresso.</span></figcaption>
-          </figure>
-
-          <figure class="shot" data-title="Tarefas">
-            <img src="assets/nc-tarefas.png" alt="Tela de tarefas do NutriCura" loading="lazy">
-            <figcaption class="cap">Tarefas <span>Cards por categoria (corpo/mente/alimentação/plano).</span></figcaption>
-          </figure>
-
-          <figure class="shot" data-title="Planner semanal">
-            <img src="assets/nc-planner.png" alt="Tela de planner semanal do NutriCura" loading="lazy">
-            <figcaption class="cap">Planner semanal <span>Planeje refeições e gere lista de compras.</span></figcaption>
-          </figure>
-
-          <figure class="shot" data-title="Receitas (explorar)">
-            <img src="assets/nc-receitas.png" alt="Tela de receitas do NutriCura" loading="lazy">
-            <figcaption class="cap">Receitas <span>Cards + tags (tempo, preferências, condições).</span></figcaption>
-          </figure>
-
-          <figure class="shot" data-title="Recompensas">
-            <img src="assets/nc-recompensas.png" alt="Tela de recompensas do NutriCura" loading="lazy">
-            <figcaption class="cap">Recompensas <span>XP, coins, níveis e badges para engajar.</span></figcaption>
-          </figure>
-        </div>
-
-        <div class="hint">
-          Dica: use 5–8 telas no máximo (o suficiente para provar sem cansar).
-        </div>
-      </div>
-    </section>
-
-    <!-- DEPOIMENTOS (opcional, mas converte) -->
+    <!-- PROVA SOCIAL -->
     <section id="prova">
       <div class="container">
         <div class="sec-head">
           <div>
             <h2>O que as pessoas falam</h2>
-            <p class="subhead">Se você ainda não tem depoimentos reais, deixe como placeholder e substitua depois.</p>
+            <p class="subhead">Você pode trocar por depoimentos reais depois.</p>
           </div>
           <span class="pill"><span class="dot"></span> Prova social</span>
         </div>
@@ -957,9 +847,7 @@
         <div class="sec-head">
           <div>
             <h2>Preço</h2>
-            <p class="subhead">
-              Sem confusão: um preço simples para facilitar a decisão. Clique e finalize no seu site de compra.
-            </p>
+            <p class="subhead">Sem confusão: um preço simples. Clique e finalize no seu site.</p>
           </div>
           <span class="pill"><span class="dot"></span> Rápido de decidir</span>
         </div>
@@ -974,7 +862,6 @@
             <div class="priceBig" aria-label="Preço NutriCura">
               <div class="n" id="priceCard">R$ 15,00</div>
               <div class="p">pagamento no site</div>
-              <!-- Se quiser: coloque “pagamento único” ou “mensal” aqui -->
             </div>
 
             <ul class="ul">
@@ -998,8 +885,7 @@
           <div class="guarantee">
             <strong>Compra segura</strong>
             <p>
-              Finalize a compra no seu site oficial. Se quiser aumentar conversão, inclua aqui:
-              “garantia de X dias”, “suporte”, “cancelamento fácil”, etc.
+              Finalize a compra no seu site oficial. (Se quiser, adicione aqui garantia, suporte, cancelamento, etc.)
             </p>
             <p style="margin-top:10px;">
               <span class="pill" style="box-shadow:none">🔒 Ambiente seguro</span>
@@ -1017,7 +903,7 @@
         <div class="sec-head">
           <div>
             <h2>FAQ</h2>
-            <p class="subhead">Respostas curtas para remover objeções e vender.</p>
+            <p class="subhead">Respostas curtas para remover objeções.</p>
           </div>
           <span class="pill"><span class="dot"></span> Sem enrolação</span>
         </div>
@@ -1037,7 +923,7 @@
               <span>Como recebo acesso depois de pagar?</span><span>＋</span>
             </button>
             <div class="a">
-              Após finalizar a compra no site, você segue o fluxo indicado lá (ex.: acesso/liberação). Se quiser, personalize esta resposta conforme seu checkout.
+              Após finalizar a compra no site, você segue o fluxo indicado lá. (Personalize conforme seu checkout.)
             </div>
           </div>
 
@@ -1055,7 +941,7 @@
               <span>O preço é R$ 15,00 mesmo?</span><span>＋</span>
             </button>
             <div class="a">
-              Sim — é o preço exibido nesta página. Se você mudar o valor, basta editar a variável <b>NUTRICURA_PRICE</b> no topo do HTML.
+              Sim — é o preço exibido nesta página. Se quiser mudar, edite <b>NUTRICURA_PRICE</b> no topo do HTML.
             </div>
           </div>
         </div>
@@ -1075,13 +961,9 @@
           </div>
           <div style="display:flex; gap:10px; flex-wrap:wrap">
             <a class="btn btn-primary" data-buy href="#">Comprar agora</a>
-            <a class="btn btn-soft" href="#por-dentro">Ver telas</a>
+            <a class="btn btn-soft" href="#beneficios">Ver benefícios</a>
           </div>
         </div>
-
-        <p class="hint">
-          Quer converter mais? Coloque aqui: “Garantia de X dias” e “Suporte via WhatsApp/Email”.
-        </p>
       </div>
     </section>
 
@@ -1089,7 +971,6 @@
       <div class="container foot">
         <div>© <span id="year"></span> NutriCura. Todos os direitos reservados.</div>
         <div style="display:flex; gap:12px; flex-wrap:wrap">
-          <!-- TODO: links reais -->
           <a href="#">Privacidade</a>
           <a href="#">Termos</a>
           <a href="mailto:contato@seu-dominio.com">Contato</a>
@@ -1109,34 +990,17 @@
     </div>
   </div>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <div class="lb-backdrop" id="lbClose"></div>
-    <div class="lb-dialog">
-      <div class="lb-panel" role="dialog" aria-modal="true" aria-label="Visualizar imagem">
-        <div class="lb-head">
-          <strong id="lbTitle">Prévia</strong>
-          <button class="icon-btn" id="lbX" aria-label="Fechar">✕</button>
-        </div>
-        <img class="lb-img" id="lbImg" alt="Visualização ampliada" />
-      </div>
-    </div>
-  </div>
-
   <script>
     (function(){
       const $ = (q, el=document) => el.querySelector(q);
       const $$ = (q, el=document) => Array.from(el.querySelectorAll(q));
 
-      // Ano
       $("#year").textContent = new Date().getFullYear();
 
-      // Aplica preço em todos os lugares
       const price = window.NUTRICURA_PRICE || "R$ 15,00";
       ["#priceTop","#priceNav","#priceHero","#priceMid","#priceCard","#priceBtn","#priceFinal","#priceSticky"]
         .forEach(id => { const el=$(id); if(el) el.textContent = price; });
 
-      // Aplica link de compra em todos os botões
       const buyUrl = window.NUTRICURA_BUY_URL || "#";
       $$("[data-buy]").forEach(a => {
         a.setAttribute("href", buyUrl);
@@ -1144,10 +1008,8 @@
         a.setAttribute("rel","noreferrer");
       });
 
-      // Fechar anúncio
       $("#announceClose").addEventListener("click", () => $("#announce").style.display = "none");
 
-      // Menu mobile
       const menuBtn = $("#menuBtn");
       const mobileMenu = $("#mobileMenu");
       menuBtn.addEventListener("click", () => {
@@ -1156,7 +1018,6 @@
       });
       $$("#mobileMenu a").forEach(a => a.addEventListener("click", () => mobileMenu.style.display = "none"));
 
-      // FAQ accordion
       $$(".qa").forEach(card => {
         const btn = card.querySelector("button");
         btn.addEventListener("click", () => {
@@ -1166,7 +1027,6 @@
         });
       });
 
-      // Copiar link de compra
       $("#copyLink").addEventListener("click", async () => {
         try{
           await navigator.clipboard.writeText(buyUrl);
@@ -1176,48 +1036,7 @@
           alert("Não foi possível copiar automaticamente. Link: " + buyUrl);
         }
       });
-
-      // Lightbox da galeria (só UX, não é “função de app”)
-      const lb = $("#lightbox");
-      const lbImg = $("#lbImg");
-      const lbTitle = $("#lbTitle");
-      function openLB(src, title){
-        lb.classList.add("open");
-        lb.setAttribute("aria-hidden","false");
-        lbImg.src = src;
-        lbTitle.textContent = title || "Prévia";
-      }
-      function closeLB(){
-        lb.classList.remove("open");
-        lb.setAttribute("aria-hidden","true");
-        lbImg.src = "";
-      }
-      $$(".shot").forEach(fig => {
-        fig.addEventListener("click", () => {
-          const img = fig.querySelector("img");
-          openLB(img.src, fig.getAttribute("data-title") || "Prévia");
-        });
-      });
-      $("#lbClose").addEventListener("click", closeLB);
-      $("#lbX").addEventListener("click", closeLB);
-      document.addEventListener("keydown", (e) => {
-        if(e.key === "Escape" && lb.classList.contains("open")) closeLB();
-      });
     })();
   </script>
-
-  <!--
-    ✅ IMAGENS (IMPORTANTE)
-    Crie a pasta /assets no mesmo lugar deste arquivo e coloque seus prints com estes nomes:
-
-      assets/nc-hero.png
-      assets/nc-dashboard.png
-      assets/nc-tarefas.png
-      assets/nc-planner.png
-      assets/nc-receitas.png
-      assets/nc-recompensas.png
-
-    Se quiser, pode trocar os nomes no HTML também.
-  -->
 </body>
 </html>
