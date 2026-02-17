@@ -1,1223 +1,995 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NutriCura — +100 receitas, tarefas, planner e gamificação • R$ 15,00</title>
-  <meta name="description" content="NutriCura: +100 receitas com filtros por condição e preferências, tarefas diárias, planejador semanal, lista de compras e gamificação. Acesso por R$ 15,00." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NutriCura - Receitas, planner e rotina por R$ 15,00</title>
+  <meta name="description" content="NutriCura: +100 receitas, tarefas diarias e planner semanal para organizar sua rotina alimentar. Acesso por R$ 15,00." />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="NutriCura — +100 receitas, tarefas, planner e gamificação • R$ 15,00" />
-  <meta property="og:description" content="Receitas por condição, tarefas e planner para consistência. Visual moderno e leve. Acesso por R$ 15,00." />
+  <meta property="og:title" content="NutriCura - Receitas, planner e rotina por R$ 15,00" />
+  <meta property="og:description" content="Tudo em um lugar: receitas, organizacao da semana e pequenas metas para manter constancia." />
   <meta property="og:type" content="website" />
-  <!-- TODO: troque pelo seu domínio (se tiver) -->
   <meta property="og:url" content="https://seu-dominio.com" />
-  <!-- TODO: troque pela sua imagem OG -->
   <meta property="og:image" content="https://seu-dominio.com/og-nutricura.png" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- JSON-LD (Oferta) -->
   <script type="application/ld+json">
   {
-    "@context":"https://schema.org",
-    "@type":"Product",
-    "name":"NutriCura",
-    "description":"+100 receitas, tarefas diárias, planner semanal, lista de compras e gamificação para apoiar consistência alimentar.",
-    "brand":{"@type":"Brand","name":"NutriCura"},
-    "offers":{
-      "@type":"Offer",
-      "priceCurrency":"BRL",
-      "price":"15.00",
-      "availability":"https://schema.org/InStock",
-      "url":"https://nutri-cura-app.vercel.app/"
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "NutriCura",
+    "description": "+100 receitas, tarefas diarias, planner semanal e lista de compras para apoiar constancia alimentar.",
+    "brand": {"@type": "Brand", "name": "NutriCura"},
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "BRL",
+      "price": "15.00",
+      "availability": "https://schema.org/InStock",
+      "url": "https://nutri-cura-app.vercel.app/"
     }
   }
   </script>
 
   <style>
-    :root{
-      /* “Cara do app”: verde + mint + cards arredondados */
-      --bg:#F6FAF8;
-      --bg2:#EEF7F3;
-      --card:#FFFFFF;
-      --text:#0E1A16;
-      --muted:#5B6864;
-      --border:rgba(14,26,22,.10);
+    :root {
+      --bg: #f4f8f2;
+      --bg-soft: #eef4ec;
+      --surface: #ffffff;
+      --text: #132217;
+      --muted: #4b6052;
+      --line: rgba(19, 34, 23, 0.12);
 
-      --primary:#079669;
-      --primary2:#0AA171;
-      --mint:#E9FFF7;
-      --mint2:#DDF7EC;
+      --brand: #0f9f66;
+      --brand-dark: #0b7e51;
+      --brand-soft: #e3f7ed;
+      --accent: #d9a441;
 
-      --blue:#2F71EF;
-      --orange:#FF8A34;
-      --yellow:#F5C84B;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --shadow: 0 20px 50px rgba(10, 44, 24, 0.12);
 
-      --shadow: 0 18px 60px rgba(14,26,22,.10);
-      --shadow2: 0 10px 26px rgba(14,26,22,.08);
-      --radius: 18px;
-
-      --max: 1120px;
-      --focus: rgba(10,161,113,.25);
+      --max: 1100px;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      color:var(--text);
-      background:
-        radial-gradient(900px 450px at 50% -180px, rgba(10,161,113,.18), transparent 60%),
-        radial-gradient(900px 450px at 85% -220px, rgba(47,113,239,.10), transparent 58%),
-        var(--bg);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    a{color:inherit; text-decoration:none}
-    .container{max-width:var(--max); margin:0 auto; padding:0 20px}
-    .sr-only{
-      position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
-    }
-    :focus-visible{outline:3px solid var(--focus); outline-offset:2px; border-radius:12px}
-
-    /* Barra superior (anúncio) */
-    .announce{
-      position: sticky; top: 0; z-index: 70;
-      background: rgba(255,255,255,.82);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
-    }
-    .announce-inner{
-      display:flex; align-items:center; gap:10px;
-      padding: 10px 0;
-    }
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--card);
-      color: var(--muted);
-      font-weight: 900;
-      font-size: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,.04);
-      white-space:nowrap;
-    }
-    .dot{
-      width:8px; height:8px; border-radius:999px;
-      background: var(--primary);
-      box-shadow: 0 0 0 3px rgba(7,150,105,.15);
-    }
-    .announce-text{
-      min-width:0;
-      color: var(--muted);
-      font-weight: 800;
-      font-size: 12px;
-      line-height: 1.35;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .icon-btn{
-      margin-left:auto;
-      width:38px; height:38px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background:transparent;
-      color:var(--muted);
-      display:grid; place-items:center;
-      cursor:pointer;
-      transition: background .15s ease, transform .15s ease;
-    }
-    .icon-btn:hover{background:rgba(0,0,0,.03)}
-    .icon-btn:active{transform:scale(.99)}
-
-    /* Header */
-    header{
-      position: sticky; top: 58px; z-index: 65;
-      background: rgba(246,250,248,.72);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0;
-      gap:16px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight:900; letter-spacing:-.02em;
-    }
-    .brand svg{width:22px; height:22px}
-    .brand span{font-size:18px}
-
-    nav.links{
-      display:flex; gap:14px; align-items:center;
-      color: var(--muted);
-      font-weight: 900;
-      font-size: 13px;
-    }
-    nav.links a{
-      padding:8px 10px;
-      border-radius: 12px;
-      transition: background .15s ease, color .15s ease;
-    }
-    nav.links a:hover{background: var(--mint); color: var(--text)}
-
-    .actions{display:flex; gap:10px; align-items:center}
-    .btn{
-      border:1px solid var(--border);
-      background: var(--card);
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: "Manrope", "Segoe UI", Arial, sans-serif;
       color: var(--text);
-      padding:12px 14px;
-      border-radius:14px;
-      cursor:pointer;
-      font-weight: 900;
-      font-size: 13px;
-      display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
-      transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
-      white-space:nowrap;
-    }
-    .btn:hover{background: rgba(0,0,0,.03)}
-    .btn:active{transform:scale(.99)}
-    .btn-primary{
-      border:none;
-      color:white;
-      background: linear-gradient(180deg, var(--primary2), var(--primary));
-      box-shadow: 0 16px 45px rgba(7,150,105,.22);
-    }
-    .btn-primary:hover{filter: brightness(1.03)}
-    .btn-soft{
-      background: var(--mint);
-      border: 1px solid rgba(7,150,105,.22);
-      color: color-mix(in srgb, var(--primary) 80%, black);
-    }
-    .menuBtn{display:none}
-    .mobileMenu{display:none; padding-bottom:14px}
-    .mobileMenu .box{
-      border:1px solid var(--border);
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow2);
-      padding:10px;
-      display:grid; gap:8px;
+      background:
+        radial-gradient(1200px 500px at 100% -120px, rgba(15, 159, 102, 0.20), transparent 62%),
+        radial-gradient(800px 420px at -10% -180px, rgba(217, 164, 65, 0.16), transparent 58%),
+        var(--bg);
+      line-height: 1.5;
     }
 
-    /* Hero */
-    .hero{padding: 26px 0 10px}
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 22px;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(19, 34, 23, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(19, 34, 23, 0.03) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.25), transparent 75%);
+      z-index: -1;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+
+    .topline {
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(6px);
+    }
+    .topline .container {
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .topline strong { color: var(--text); }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      border-bottom: 1px solid var(--line);
+      background: rgba(244, 248, 242, 0.88);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "Sora", "Segoe UI", Arial, sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: linear-gradient(155deg, var(--brand), var(--brand-dark));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      position: relative;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border: 2px solid #fff;
+      border-top: 0;
+      border-left: 0;
+      transform: rotate(45deg);
+      left: 9px;
+      top: 6px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      padding: 8px 10px;
+      border-radius: 10px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      background: var(--brand-soft);
+      color: var(--text);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      padding: 11px 14px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn:active { transform: translateY(1px); }
+
+    .btn-primary {
+      color: #fff;
+      border: 0;
+      background: linear-gradient(180deg, var(--brand), var(--brand-dark));
+      box-shadow: 0 12px 26px rgba(15, 159, 102, 0.30);
+    }
+
+    .btn-primary:hover { filter: brightness(1.03); }
+
+    .btn-soft {
+      background: var(--brand-soft);
+      border-color: rgba(15, 159, 102, 0.25);
+      color: var(--brand-dark);
+    }
+
+    .hero {
+      padding: 54px 0 30px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 26px;
       align-items: center;
     }
-    h1{
-      margin: 12px 0 0;
-      font-size: 44px;
-      letter-spacing: -.04em;
-      line-height: 1.05;
-    }
-    .lead{
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.55;
-      max-width: 70ch;
-    }
-    .cta{
-      display:flex; flex-wrap:wrap; gap:10px;
-      margin-top: 16px;
-      align-items:center;
-    }
-    .priceTag{
-      display:inline-flex; align-items:baseline; gap:10px;
-      padding: 10px 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(7,150,105,.22);
-      background: linear-gradient(180deg, rgba(233,255,247,.70), rgba(255,255,255,.90));
-      box-shadow: 0 12px 30px rgba(7,150,105,.10);
-      font-weight: 900;
-    }
-    .priceTag .big{font-size: 26px; letter-spacing:-.03em}
-    .priceTag .small{font-size: 12px; color: var(--muted); font-weight: 900}
 
-    .trust{
-      display:flex; flex-wrap:wrap; gap:10px;
-      margin-top: 14px;
-      align-items:center;
-    }
-
-    /* Mock / prova visual (parece app, mas é só imagem) */
-    .device{
-      position:relative;
-      border-radius: 28px;
-      background: linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.40));
-      border: 1px solid rgba(14,26,22,.12);
-      box-shadow: var(--shadow);
-      padding: 14px;
-      overflow:hidden;
-    }
-    .device:before{
-      content:"";
-      position:absolute; inset:-40px -80px auto auto;
-      width:220px; height:220px;
-      background: radial-gradient(circle at 30% 30%, rgba(10,161,113,.18), transparent 65%);
-      transform: rotate(18deg);
-      pointer-events:none;
-    }
-    .screen{
-      border-radius: 22px;
-      overflow:hidden;
-      border: 1px solid rgba(14,26,22,.12);
-      background: #fff;
-    }
-    .screen img{width:100%; height:auto; display:block}
-    .floaters{
-      position:absolute; left:14px; right:14px; bottom:14px;
-      display:flex; gap:10px; flex-wrap:wrap;
-      pointer-events:none;
-    }
-    .floater{
-      background: rgba(255,255,255,.90);
-      border: 1px solid rgba(14,26,22,.12);
-      box-shadow: 0 10px 26px rgba(0,0,0,.10);
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--brand-soft);
+      color: var(--brand-dark);
+      border: 1px solid rgba(15, 159, 102, 0.25);
       border-radius: 999px;
-      padding: 8px 10px;
-      font-weight: 900;
+      padding: 8px 12px;
+      font-weight: 800;
       font-size: 12px;
-      color: var(--text);
-      display:inline-flex; align-items:center; gap:8px;
-      backdrop-filter: blur(10px);
-    }
-    .floater i{
-      width:22px; height:22px; border-radius:999px;
-      display:grid; place-items:center;
-      background: var(--mint);
-      border: 1px solid rgba(7,150,105,.20);
-      color: var(--primary);
-      font-style: normal;
-      font-weight: 900;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
     }
 
-    /* Sections */
-    section{padding: 36px 0}
-    .sec-head{
-      display:flex; align-items:flex-end; justify-content:space-between;
-      gap: 16px;
+    h1 {
+      margin: 14px 0 12px;
+      font-family: "Sora", "Segoe UI", Arial, sans-serif;
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .lead {
+      margin: 0;
+      max-width: 62ch;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .hero-cta {
+      margin-top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .price-chip {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 10px;
+      border: 1px solid rgba(15, 159, 102, 0.28);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(227, 247, 237, 0.8), #fff);
+      padding: 10px 12px;
+      font-weight: 800;
+    }
+
+    .price-chip b {
+      font-size: 24px;
+      letter-spacing: -0.03em;
+      color: var(--brand-dark);
+    }
+
+    .hero-notes {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hero-notes span {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #294034;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(15, 159, 102, 0.24), transparent 68%);
+      top: -80px;
+      right: -80px;
+    }
+
+    .mini-title {
+      margin: 0;
+      font-family: "Sora", "Segoe UI", Arial, sans-serif;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .mini-list {
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .mini-list li {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 11px 12px;
+      background: #fff;
+      font-weight: 700;
+      color: #2d4237;
+    }
+
+    .mini-list li strong { color: var(--text); }
+
+    section {
+      padding: 18px 0;
+    }
+
+    .section-head {
       margin-bottom: 14px;
     }
-    h2{
-      margin:0;
-      font-size: 28px;
-      letter-spacing:-.03em;
-      line-height:1.15;
+
+    .section-head h2 {
+      margin: 0;
+      font-family: "Sora", "Segoe UI", Arial, sans-serif;
+      font-size: clamp(26px, 3.2vw, 38px);
+      letter-spacing: -0.03em;
     }
-    .subhead{
-      margin-top: 8px;
+
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 70ch;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      min-height: 190px;
+      display: grid;
+      align-content: start;
+      gap: 10px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px rgba(19, 34, 23, 0.10);
+    }
+
+    .card i {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--brand-soft);
+      color: var(--brand-dark);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .card p {
+      margin: 0;
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.55;
-      max-width: 78ch;
     }
 
-    /* Features (cards “app-like”) */
-    .grid3{display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:12px}
-    .card{
-      border:1px solid var(--border);
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow2);
-      padding: 14px;
-    }
-    .fcard{position:relative; overflow:hidden}
-    .fcard:before{
-      content:"";
-      position:absolute; left:0; top:0; bottom:0;
-      width:6px; background: var(--primary);
-    }
-    .f-top{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:10px;
-      padding-left:6px;
-    }
-    .f-top strong{font-size: 14px; letter-spacing:-.01em}
-    .badge{
-      padding: 7px 10px;
-      border-radius:999px;
-      background: var(--mint);
-      border: 1px solid rgba(7,150,105,.20);
-      color: color-mix(in srgb, var(--primary) 80%, black);
-      font-weight: 900;
-      font-size: 12px;
-      white-space:nowrap;
-    }
-    .fcard p{
-      margin: 8px 0 0;
-      padding-left: 6px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-    .accent-blue:before{background: var(--blue)}
-    .accent-orange:before{background: var(--orange)}
-    .accent-yellow:before{background: var(--yellow)}
-
-    /* “Como funciona” */
-    .steps{
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
-      margin-top: 12px;
-    }
-    .step{
-      border:1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(233,255,247,.35));
-      border-radius: var(--radius);
-      box-shadow: var(--shadow2);
-      padding: 14px;
-      position:relative;
-      overflow:hidden;
-    }
-    .step .n{
-      width: 34px; height: 34px; border-radius: 14px;
-      display:grid; place-items:center;
-      background: var(--mint);
-      border: 1px solid rgba(7,150,105,.22);
-      color: var(--primary);
-      font-weight: 900;
-      margin-bottom: 10px;
-    }
-    .step strong{display:block; font-size: 14px; letter-spacing:-.01em}
-    .step p{margin:8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5}
-
-    /* Galeria (scroll-snap) */
-    .gallery{
-      display:grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(260px, 1fr);
-      gap: 12px;
-      overflow-x:auto;
-      padding-bottom: 6px;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-    }
-    .shot{
-      scroll-snap-align: start;
-      border:1px solid var(--border);
-      background: var(--card);
-      border-radius: 22px;
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-      cursor: pointer;
-    }
-    .shot img{width:100%; height:auto; display:block}
-    .shot .cap{
-      padding: 10px 12px;
-      border-top: 1px solid var(--border);
-      font-weight: 900;
-      font-size: 13px;
-      color: var(--text);
-    }
-    .shot .cap span{
-      display:block;
-      margin-top: 4px;
-      font-weight: 800;
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-    .hint{
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 800;
     }
 
-    /* Depoimentos (placeholders) */
-    .quotes{display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:12px; margin-top: 12px}
-    .quote{
-      border:1px solid var(--border);
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow2);
-      padding: 14px;
-    }
-    .quote .stars{color: color-mix(in srgb, var(--yellow) 70%, #000); font-weight: 900; letter-spacing: .12em}
-    .quote p{margin:10px 0 0; color: var(--muted); font-size: 12px; line-height: 1.55; font-weight: 800}
-    .quote .who{margin-top:12px; font-weight: 900; font-size: 12px}
-
-    /* Preço (1 plano — R$15) */
-    .pricingWrap{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 12px;
-      margin-top: 12px;
-      align-items: start;
-    }
-    .priceCard{
-      border:1px solid rgba(7,150,105,.25);
-      background: linear-gradient(180deg, rgba(233,255,247,.70), rgba(255,255,255,.95));
-      border-radius: 22px;
-      box-shadow: 0 18px 60px rgba(7,150,105,.14);
-      padding: 16px;
-    }
-    .priceTitle{
-      display:flex; align-items:center; justify-content:space-between; gap: 10px;
-      flex-wrap:wrap;
-    }
-    .priceTitle strong{font-size: 15px}
-    .priceBig{
-      margin-top: 10px;
-      display:flex; align-items:baseline; gap: 10px;
-    }
-    .priceBig .n{font-size: 44px; font-weight: 900; letter-spacing:-.04em}
-    .priceBig .p{font-size: 12px; font-weight: 900; color: var(--muted)}
-    .ul{margin: 12px 0 0; padding:0; list-style:none; display:grid; gap: 10px}
-    .ul li{
-      display:flex; gap:10px; align-items:flex-start;
-      color: var(--muted);
-      font-weight: 900;
-      font-size: 12px;
-      line-height: 1.45;
-    }
-    .ul .ok{color: var(--primary); font-weight: 900; margin-top: 1px}
-    .smallNote{
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.55;
-      font-weight: 800;
-    }
-    .guarantee{
-      border:1px solid var(--border);
-      background: var(--card);
-      border-radius: 22px;
-      box-shadow: var(--shadow2);
-      padding: 14px;
-    }
-    .guarantee strong{font-size: 14px}
-    .guarantee p{margin:8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; font-weight: 800}
-
-    /* FAQ */
-    .faq{display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top: 12px}
-    .qa button{
-      width:100%;
-      text-align:left;
-      border:none;
-      background:transparent;
-      padding:0;
-      cursor:pointer;
-      display:flex; justify-content:space-between; gap:12px;
-      font-weight: 900;
-      font-size: 13px;
-    }
-    .qa .a{
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.55;
-      display:none;
-      font-weight: 800;
-    }
-    .qa.open .a{display:block}
-
-    /* CTA final */
-    .final{
-      border: 1px solid rgba(7,150,105,.22);
-      background: linear-gradient(135deg, rgba(10,161,113,.16), rgba(47,113,239,.08), rgba(245,200,75,.10));
-      border-radius: 22px;
-      box-shadow: var(--shadow2);
+    .step {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: #fff;
       padding: 18px;
-      display:flex; align-items:center; justify-content:space-between;
-      gap: 12px;
-      flex-wrap:wrap;
     }
-    .final h3{margin:0; font-size: 18px; letter-spacing:-.02em}
-    .final p{margin:6px 0 0; color: var(--muted); font-size: 12px; line-height: 1.55; max-width: 75ch; font-weight: 800}
 
-    footer{
-      padding: 26px 0 34px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
+    .step .n {
+      display: inline-flex;
+      width: 30px;
+      height: 30px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: var(--text);
+      color: #fff;
       font-size: 12px;
-    }
-    .foot{
-      display:flex; align-items:center; justify-content:space-between; gap: 12px;
-      flex-wrap:wrap;
-    }
-    .foot a{font-weight: 900}
-    .foot a:hover{text-decoration: underline}
-
-    /* Sticky CTA mobile */
-    .stickyCta{
-      position: fixed;
-      left: 14px; right: 14px; bottom: 14px;
-      z-index: 80;
-      display:none;
-    }
-    .stickyCta .bar{
-      max-width: var(--max);
-      margin: 0 auto;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.92);
-      backdrop-filter: blur(10px);
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      padding: 10px;
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-    }
-    .stickyCta .txt{
       font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .step h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .checklist {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 18px;
+    }
+
+    .checklist h3 {
+      margin: 0 0 10px;
+      font-size: 19px;
+      letter-spacing: -0.02em;
+    }
+
+    .checklist ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .checklist li::before {
+      content: "OK";
+      display: inline-flex;
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      background: var(--brand-soft);
+      color: var(--brand-dark);
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 900;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    .price {
+      margin-top: 14px;
+      background:
+        linear-gradient(180deg, rgba(227, 247, 237, 0.72), #fff),
+        #fff;
+      border: 1px solid rgba(15, 159, 102, 0.28);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .price-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .price-top h3 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: -0.03em;
+    }
+
+    .amount {
+      font-family: "Sora", "Segoe UI", Arial, sans-serif;
+      font-size: clamp(28px, 4.5vw, 44px);
+      letter-spacing: -0.04em;
+      color: var(--brand-dark);
+      margin: 6px 0 0;
+    }
+
+    .price p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .price ul {
+      margin: 16px 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #274033;
+    }
+
+    .price ul li {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 9px 10px;
+    }
+
+    .faq {
+      margin-top: 10px;
+      display: grid;
+      gap: 8px;
+    }
+
+    details {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 800;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    details p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .final {
+      padding-top: 10px;
+      padding-bottom: 86px;
+    }
+
+    .final .panel {
+      display: grid;
+      gap: 12px;
+      text-align: center;
+      justify-items: center;
+      padding: 28px;
+    }
+
+    .final h3 {
+      margin: 0;
+      font-family: "Sora", "Segoe UI", Arial, sans-serif;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: -0.03em;
+      max-width: 20ch;
+    }
+
+    .final p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 58ch;
+      font-size: 15px;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 26px 0 88px;
+      color: #4f6456;
+      font-size: 13px;
+    }
+
+    .sticky-buy {
+      position: fixed;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      z-index: 40;
+      border: 1px solid rgba(15, 159, 102, 0.3);
+      border-radius: 16px;
+      background: rgba(19, 34, 23, 0.93);
+      color: #ecfff5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px;
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.22);
+    }
+
+    .sticky-buy .txt {
       font-size: 12px;
-      color: var(--text);
+      font-weight: 800;
       line-height: 1.2;
     }
-    .stickyCta .txt span{
-      display:block;
-      margin-top: 4px;
-      color: var(--muted);
-      font-weight: 800;
-      font-size: 11px;
+
+    .sticky-buy .txt strong {
+      display: block;
+      font-size: 15px;
+      font-family: "Sora", "Segoe UI", Arial, sans-serif;
+      letter-spacing: -0.02em;
     }
 
-    /* Lightbox */
-    .lightbox{
-      position: fixed; inset: 0;
-      display:none;
-      z-index: 100;
-    }
-    .lightbox.open{display:block}
-    .lb-backdrop{
-      position:absolute; inset:0;
-      background: rgba(0,0,0,.55);
-    }
-    .lb-dialog{
-      position:relative;
-      height:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 18px;
-    }
-    .lb-panel{
-      max-width: 980px;
-      width: 100%;
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.92);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .lb-head{
-      display:flex; align-items:center; justify-content:space-between; gap: 10px;
-      padding: 10px 12px;
-      border-bottom: 1px solid rgba(0,0,0,.08);
-    }
-    .lb-head strong{font-size: 13px}
-    .lb-img{width:100%; height:auto; display:block; background:#fff}
-
-    /* Responsive */
-    @media (max-width: 980px){
-      nav.links{display:none}
-      .menuBtn{display:inline-flex}
-      .hero-grid{grid-template-columns: 1fr; gap: 14px}
-      h1{font-size: 38px}
-      .grid3{grid-template-columns: 1fr 1fr}
-      .steps{grid-template-columns: 1fr}
-      .quotes{grid-template-columns: 1fr}
-      .pricingWrap{grid-template-columns: 1fr}
-      .faq{grid-template-columns: 1fr}
-      .stickyCta{display:block}
-    }
-    @media (max-width: 520px){
-      h1{font-size: 34px}
-      .grid3{grid-template-columns: 1fr}
-      .gallery{grid-auto-columns: minmax(240px, 1fr)}
+    .sticky-buy .btn {
+      border-color: transparent;
+      background: #fff;
+      color: var(--brand-dark);
+      padding: 10px 14px;
+      font-size: 13px;
     }
 
-    @media (prefers-reduced-motion: reduce){
-      *{scroll-behavior:auto !important}
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+      will-change: opacity, transform;
+    }
+
+    .reveal.on {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .nav-links { display: none; }
+      .hero-grid,
+      .cards,
+      .steps,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 34px;
+      }
+
+      .card,
+      .step,
+      .checklist {
+        min-height: 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topline .container {
+        min-height: 42px;
+        font-size: 12px;
+      }
+
+      .nav {
+        min-height: 66px;
+      }
+
+      .btn {
+        padding: 10px 12px;
+      }
+
+      .panel,
+      .price,
+      .final .panel {
+        padding: 18px;
+      }
+
+      footer {
+        padding-bottom: 92px;
+      }
     }
   </style>
 </head>
-
 <body>
-  <a class="sr-only" href="#conteudo">Pular para o conteúdo</a>
-
-  <!-- CONFIG (mude aqui se quiser) -->
   <script>
-    // ✅ Link de compra que você mandou:
     window.NUTRICURA_BUY_URL = "https://nutri-cura-app.vercel.app/";
-    // ✅ Preço exibido:
     window.NUTRICURA_PRICE = "R$ 15,00";
   </script>
 
-  <!-- Barra anúncio (vendas) -->
-  <div class="announce" id="announce">
+  <div class="topline">
     <div class="container">
-      <div class="announce-inner">
-        <span class="pill"><span class="dot"></span> Oferta: <span id="priceTop">R$ 15,00</span></span>
-        <div class="announce-text">Acesso ao NutriCura com +100 receitas, tarefas e planner — visual moderno e simples.</div>
-        <a class="btn btn-primary" data-buy href="#" style="padding:10px 12px">Comprar agora</a>
-        <button class="icon-btn" id="announceClose" aria-label="Fechar">✕</button>
-      </div>
+      <span>Oferta direta: <strong id="priceTop">R$ 15,00</strong></span>
+      <span>Produto digital para apoio de rotina alimentar</span>
     </div>
   </div>
 
-  <!-- Header -->
   <header>
-    <div class="container">
-      <div class="nav">
-        <a class="brand" href="#topo" aria-label="NutriCura">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M20 4c-7.2 0-12.6 3.6-15 9.3C3.8 16.3 5 20 9 20c6.2 0 10-5.4 10-16Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            <path d="M6 15c2.5-1.7 5.7-3.1 10-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-          <span>NutriCura</span>
-        </a>
+    <div class="container nav">
+      <a class="brand" href="#topo" aria-label="Ir para o topo">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>NutriCura</span>
+      </a>
 
-        <nav class="links" aria-label="Navegação">
-          <a href="#beneficios">Benefícios</a>
-          <a href="#como">Como funciona</a>
-          <a href="#por-dentro">Por dentro</a>
-          <a href="#preco">Preço</a>
-          <a href="#faq">FAQ</a>
-        </nav>
+      <nav class="nav-links" aria-label="Navegacao principal">
+        <a href="#beneficios">Beneficios</a>
+        <a href="#como">Como funciona</a>
+        <a href="#preco">Preco</a>
+        <a href="#faq">FAQ</a>
+      </nav>
 
-        <div class="actions">
-          <button class="btn btn-soft menuBtn" id="menuBtn" aria-label="Abrir menu">☰ Menu</button>
-          <a class="btn btn-primary" data-buy href="#">Comprar por <span id="priceNav">R$ 15,00</span></a>
-        </div>
-      </div>
-
-      <!-- Menu mobile -->
-      <div class="mobileMenu" id="mobileMenu">
-        <div class="box">
-          <a class="btn" href="#beneficios">Benefícios</a>
-          <a class="btn" href="#como">Como funciona</a>
-          <a class="btn" href="#por-dentro">Por dentro</a>
-          <a class="btn" href="#preco">Preço</a>
-          <a class="btn" href="#faq">FAQ</a>
-          <a class="btn btn-primary" data-buy href="#">Comprar agora</a>
-        </div>
-      </div>
+      <a class="btn btn-primary" data-buy href="#">Comprar por <span id="priceNav">R$ 15,00</span></a>
     </div>
   </header>
 
-  <main id="conteudo">
-    <!-- HERO -->
-    <section class="hero" id="topo">
+  <main id="topo">
+    <section class="hero">
       <div class="container hero-grid">
-        <div>
-          <span class="pill"><span class="dot"></span> +100 receitas • tarefas • planner • gamificação</span>
-
-          <h1>
-            Rotina alimentar mais <span style="color:var(--primary)">fácil</span> — do jeito que você consegue manter.
-          </h1>
-
+        <div class="reveal">
+          <span class="eyebrow">Receitas + planejamento + constancia</span>
+          <h1>Mais organizacao na alimentacao, sem complicar sua rotina.</h1>
           <p class="lead">
-            O <b>NutriCura</b> foi pensado para reduzir atrito: você encontra receitas com filtros, organiza a semana,
-            faz tarefas rápidas e mantém a motivação com recompensas leves. Tudo com um visual “cara do app”:
-            <b>limpo, moderno e engajante</b>.
+            O NutriCura junta o que normalmente fica espalhado: ideias de receitas, tarefas do dia,
+            planner semanal e lista de compras. Menos decisao, mais execucao.
           </p>
 
-          <div class="cta">
-            <a class="btn btn-primary" data-buy href="#">Comprar agora</a>
-            <a class="btn btn-soft" href="#por-dentro">Ver telas</a>
-            <span class="priceTag" aria-label="Preço">
-              <span class="big" id="priceHero">R$ 15,00</span>
-              <span class="small">preço promocional</span>
-            </span>
+          <div class="hero-cta">
+            <a class="btn btn-primary" data-buy href="#">Quero acesso agora</a>
+            <a class="btn btn-soft" href="#beneficios">Ver o que inclui</a>
+            <span class="price-chip">Acesso unico por <b id="priceHero">R$ 15,00</b></span>
           </div>
 
-          <div class="trust" aria-label="Destaques">
-            <span class="pill">✅ +100 receitas</span>
-            <span class="pill">🗓️ Planner semanal</span>
-            <span class="pill">🧾 Lista de compras</span>
-            <span class="pill">🏅 XP, coins & badges</span>
+          <div class="hero-notes">
+            <span>+100 receitas com filtros</span>
+            <span>Planner semanal simples</span>
+            <span>Tarefas curtas para manter ritmo</span>
           </div>
-
-          <p class="hint" style="max-width:85ch">
-            <b>Aviso importante:</b> NutriCura é ferramenta de apoio e organização. Não substitui acompanhamento médico/nutricional.
-            Para sintomas persistentes ou orientações clínicas, procure um profissional.
-          </p>
         </div>
 
-        <!-- Prova visual (só imagem, para vender) -->
-        <div class="device" aria-label="Prévia do NutriCura">
-          <!-- ✅ Troque por uma screenshot real do seu app -->
-          <div class="screen">
-            <img src="assets/nc-hero.png" alt="Prévia do app NutriCura (exemplo)" loading="lazy">
-          </div>
-          <div class="floaters" aria-hidden="true">
-            <span class="floater"><i>🍽️</i> +100 receitas</span>
-            <span class="floater"><i>🗓️</i> Planner</span>
-            <span class="floater"><i>🎯</i> Tarefas</span>
-          </div>
-        </div>
+        <aside class="panel reveal" aria-label="Resumo do produto">
+          <h2 class="mini-title">O que voce recebe</h2>
+          <ul class="mini-list">
+            <li><strong>Receitas filtradas</strong> por preferencia, tempo e estilo.</li>
+            <li><strong>Lista de compras</strong> para reduzir esquecimento.</li>
+            <li><strong>Planner da semana</strong> para visualizar o todo.</li>
+            <li><strong>Sistema de metas</strong> para manter consistencia diaria.</li>
+          </ul>
+        </aside>
       </div>
     </section>
 
-    <!-- BENEFÍCIOS -->
     <section id="beneficios">
       <div class="container">
-        <div class="sec-head">
-          <div>
-            <h2>Benefícios (do jeito que vende)</h2>
-            <p class="subhead">
-              Aqui é landing page: benefícios claros, linguagem simples e visual consistente com o app.
-              Sem “funcionalidade de app” no site — só o que ajuda a converter.
-            </p>
-          </div>
-          <span class="pill"><span class="dot"></span> Visual moderno</span>
+        <div class="section-head reveal">
+          <h2>Limpo no visual, pratico no uso</h2>
+          <p>Tudo foi organizado para voce entender rapido o que fazer em cada etapa da semana.</p>
         </div>
 
-        <div class="grid3">
-          <div class="card fcard">
-            <div class="f-top">
-              <strong>Receitas por condição</strong>
-              <span class="badge">Explorar</span>
-            </div>
-            <p>Biblioteca com filtros (ex.: diabetes tipo 2, hipertensão, refluxo) + preferências como vegano e sem glúten.</p>
-          </div>
+        <div class="cards">
+          <article class="card reveal">
+            <i>01</i>
+            <h3>Receitas objetivas</h3>
+            <p>Escolha por condicao, tipo de alimentacao ou tempo disponivel no dia.</p>
+          </article>
 
-          <div class="card fcard accent-blue">
-            <div class="f-top">
-              <strong>Cards que guiam</strong>
-              <span class="badge" style="background:color-mix(in srgb, var(--blue) 10%, #fff); border-color:color-mix(in srgb, var(--blue) 25%, rgba(0,0,0,.08)); color:color-mix(in srgb, var(--blue) 80%, black);">UI/UX</span>
-            </div>
-            <p>Hierarquia visual clara e rápida: menos dúvida, mais ação (o design “puxa” você para concluir).</p>
-          </div>
+          <article class="card reveal">
+            <i>02</i>
+            <h3>Planejamento claro</h3>
+            <p>Monte sua semana em minutos e pare de decidir tudo do zero todos os dias.</p>
+          </article>
 
-          <div class="card fcard accent-yellow">
-            <div class="f-top">
-              <strong>Planner + lista de compras</strong>
-              <span class="badge" style="background:color-mix(in srgb, var(--yellow) 18%, #fff); border-color:color-mix(in srgb, var(--yellow) 35%, rgba(0,0,0,.08)); color:color-mix(in srgb, #000 70%, var(--muted));">Prático</span>
-            </div>
-            <p>Planeje refeições e tenha lista pronta para compras. Menos decisão, mais execução.</p>
-          </div>
+          <article class="card reveal">
+            <i>03</i>
+            <h3>Rotina guiada</h3>
+            <p>Tarefas curtas ajudam voce a continuar mesmo nos dias corridos.</p>
+          </article>
 
-          <div class="card fcard accent-orange">
-            <div class="f-top">
-              <strong>Gamificação leve</strong>
-              <span class="badge" style="background:color-mix(in srgb, var(--orange) 12%, #fff); border-color:color-mix(in srgb, var(--orange) 28%, rgba(0,0,0,.08)); color:color-mix(in srgb, var(--orange) 85%, black);">Engaja</span>
-            </div>
-            <p>XP, coins, streak e badges: motivação positiva para manter consistência sem pressão.</p>
-          </div>
-
-          <div class="card fcard">
-            <div class="f-top">
-              <strong>Tarefas rápidas</strong>
-              <span class="badge">Rotina</span>
-            </div>
-            <p>Micro-hábitos por categorias (corpo, alimentação, mente e planejamento) com sensação de progresso.</p>
-          </div>
-
-          <div class="card fcard accent-blue">
-            <div class="f-top">
-              <strong>Organização sem complicar</strong>
-              <span class="badge" style="background:color-mix(in srgb, var(--blue) 10%, #fff); border-color:color-mix(in srgb, var(--blue) 25%, rgba(0,0,0,.08)); color:color-mix(in srgb, var(--blue) 80%, black);">Simples</span>
-            </div>
-            <p>O app te “puxa” para o próximo passo: o que fazer hoje, o que comer agora, o que comprar.</p>
-          </div>
+          <article class="card reveal">
+            <i>04</i>
+            <h3>Compras sem atrito</h3>
+            <p>Veja o que falta e organize compras com base no que planejou.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- COMO FUNCIONA -->
     <section id="como">
       <div class="container">
-        <div class="sec-head">
-          <div>
-            <h2>Como funciona</h2>
-            <p class="subhead">Três passos (curtos) para o usuário entender rápido e comprar.</p>
-          </div>
-          <span class="pill"><span class="dot"></span> Direto ao ponto</span>
+        <div class="section-head reveal">
+          <h2>Como funciona em 3 passos</h2>
+          <p>Fluxo simples para comecar no mesmo dia em que adquirir o acesso.</p>
         </div>
 
-        <div class="steps" aria-label="Passos">
-          <div class="step">
-            <div class="n">1</div>
-            <strong>Escolha sua trilha</strong>
-            <p>Filtre receitas e sugestões por condição e preferências (ex.: vegano, sem glúten, tempo de preparo).</p>
-          </div>
-          <div class="step">
-            <div class="n">2</div>
-            <strong>Planeje a semana</strong>
-            <p>Monte seu plano e gere uma lista de compras para reduzir decisões diárias.</p>
-          </div>
-          <div class="step">
-            <div class="n">3</div>
-            <strong>Mantenha a consistência</strong>
-            <p>Tarefas + recompensas (XP/badges) para transformar intenção em rotina.</p>
-          </div>
-        </div>
+        <div class="steps">
+          <article class="step reveal">
+            <span class="n">1</span>
+            <h3>Escolha seu foco</h3>
+            <p>Defina preferencias e veja as receitas mais alinhadas ao seu momento.</p>
+          </article>
 
-        <div class="hint">
-          CTA recomendado: “Comprar agora” logo abaixo (para quem já decidiu).
-        </div>
+          <article class="step reveal">
+            <span class="n">2</span>
+            <h3>Monte a semana</h3>
+            <p>Organize refeicoes no planner e gere uma lista de compras objetiva.</p>
+          </article>
 
-        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn btn-primary" data-buy href="#">Comprar por <span id="priceMid">R$ 15,00</span></a>
-          <a class="btn btn-soft" href="#preco">Ver o que inclui</a>
+          <article class="step reveal">
+            <span class="n">3</span>
+            <h3>Siga as tarefas</h3>
+            <p>Avance com pequenas metas diarias para manter consistencia sem sobrecarga.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- POR DENTRO -->
-    <section id="por-dentro">
-      <div class="container">
-        <div class="sec-head">
-          <div>
-            <h2>Por dentro do NutriCura</h2>
-            <p class="subhead">
-              Prova visual converte. Use screenshots reais do seu app (as que você já tem) e pronto.
-              (Arraste para o lado no celular.)
-            </p>
-          </div>
-          <span class="pill"><span class="dot"></span> Prova visual</span>
-        </div>
+    <section>
+      <div class="container split">
+        <article class="checklist reveal">
+          <h3>Indicado para quem quer:</h3>
+          <ul>
+            <li>ter direcao na alimentacao sem perder tempo</li>
+            <li>reduzir improviso durante a semana</li>
+            <li>unir receitas e planejamento em um lugar so</li>
+            <li>manter constancia com metas simples</li>
+          </ul>
+        </article>
 
-        <div class="gallery" aria-label="Galeria de telas">
-          <!-- ✅ Troque os arquivos em /assets pelos seus prints -->
-          <figure class="shot" data-title="Painel do dia">
-            <img src="assets/nc-dashboard.png" alt="Tela de painel do dia do NutriCura" loading="lazy">
-            <figcaption class="cap">Painel do dia <span>Resumo, hidratação e sensação de progresso.</span></figcaption>
-          </figure>
-
-          <figure class="shot" data-title="Tarefas">
-            <img src="assets/nc-tarefas.png" alt="Tela de tarefas do NutriCura" loading="lazy">
-            <figcaption class="cap">Tarefas <span>Cards por categoria (corpo/mente/alimentação/plano).</span></figcaption>
-          </figure>
-
-          <figure class="shot" data-title="Planner semanal">
-            <img src="assets/nc-planner.png" alt="Tela de planner semanal do NutriCura" loading="lazy">
-            <figcaption class="cap">Planner semanal <span>Planeje refeições e gere lista de compras.</span></figcaption>
-          </figure>
-
-          <figure class="shot" data-title="Receitas (explorar)">
-            <img src="assets/nc-receitas.png" alt="Tela de receitas do NutriCura" loading="lazy">
-            <figcaption class="cap">Receitas <span>Cards + tags (tempo, preferências, condições).</span></figcaption>
-          </figure>
-
-          <figure class="shot" data-title="Recompensas">
-            <img src="assets/nc-recompensas.png" alt="Tela de recompensas do NutriCura" loading="lazy">
-            <figcaption class="cap">Recompensas <span>XP, coins, níveis e badges para engajar.</span></figcaption>
-          </figure>
-        </div>
-
-        <div class="hint">
-          Dica: use 5–8 telas no máximo (o suficiente para provar sem cansar).
-        </div>
+        <article class="checklist reveal">
+          <h3>Inclui no acesso:</h3>
+          <ul>
+            <li>biblioteca com mais de 100 receitas</li>
+            <li>filtros por contexto e preferencia</li>
+            <li>planner semanal com organizacao visual</li>
+            <li>lista de compras e tarefas diarias</li>
+          </ul>
+        </article>
       </div>
     </section>
 
-    <!-- DEPOIMENTOS (opcional, mas converte) -->
-    <section id="prova">
-      <div class="container">
-        <div class="sec-head">
-          <div>
-            <h2>O que as pessoas falam</h2>
-            <p class="subhead">Se você ainda não tem depoimentos reais, deixe como placeholder e substitua depois.</p>
-          </div>
-          <span class="pill"><span class="dot"></span> Prova social</span>
-        </div>
-
-        <div class="quotes">
-          <div class="quote">
-            <div class="stars">★★★★★</div>
-            <p>“O planner + lista de compras foi o que me fez manter a semana organizada. Fica muito fácil repetir.”</p>
-            <div class="who">— Usuário(a)</div>
-          </div>
-          <div class="quote">
-            <div class="stars">★★★★★</div>
-            <p>“As receitas por condição e as tarefas diárias tiram o ‘o que eu faço agora?’. Isso ajuda muito.”</p>
-            <div class="who">— Usuário(a)</div>
-          </div>
-          <div class="quote">
-            <div class="stars">★★★★★</div>
-            <p>“Os badges e o streak dão aquela motivação leve. Não é pressão, é incentivo.”</p>
-            <div class="who">— Usuário(a)</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PREÇO -->
     <section id="preco">
       <div class="container">
-        <div class="sec-head">
-          <div>
-            <h2>Preço</h2>
-            <p class="subhead">
-              Sem confusão: um preço simples para facilitar a decisão. Clique e finalize no seu site de compra.
-            </p>
+        <div class="price reveal">
+          <div class="price-top">
+            <h3>Preco unico, sem surpresa</h3>
+            <a class="btn btn-primary" data-buy href="#">Comprar agora</a>
           </div>
-          <span class="pill"><span class="dot"></span> Rápido de decidir</span>
-        </div>
+          <div class="amount" id="priceCard">R$ 15,00</div>
+          <p>Acesso digital ao NutriCura com receitas, planner e recursos de organizacao.</p>
 
-        <div class="pricingWrap">
-          <div class="priceCard">
-            <div class="priceTitle">
-              <strong>NutriCura — Acesso</strong>
-              <span class="pill"><span class="dot"></span> Melhor custo-benefício</span>
-            </div>
+          <ul>
+            <li>Acesso ao conteudo completo do produto</li>
+            <li>Estrutura para planejar e executar sua semana</li>
+            <li>Ferramenta de apoio a rotina alimentar</li>
+          </ul>
 
-            <div class="priceBig" aria-label="Preço NutriCura">
-              <div class="n" id="priceCard">R$ 15,00</div>
-              <div class="p">pagamento no site</div>
-              <!-- Se quiser: coloque “pagamento único” ou “mensal” aqui -->
-            </div>
-
-            <ul class="ul">
-              <li><span class="ok">✓</span> Acesso ao app (conteúdo, receitas, organização e recompensas)</li>
-              <li><span class="ok">✓</span> +100 receitas com filtros por condição e preferências</li>
-              <li><span class="ok">✓</span> Tarefas diárias e sensação de progresso</li>
-              <li><span class="ok">✓</span> Planner semanal + lista de compras</li>
-              <li><span class="ok">✓</span> Gamificação (XP, coins, badges, streak)</li>
-            </ul>
-
-            <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-              <a class="btn btn-primary" data-buy href="#">Comprar por <span id="priceBtn">R$ 15,00</span></a>
-              <button class="btn btn-soft" id="copyLink" type="button">Copiar link de compra</button>
-            </div>
-
-            <div class="smallNote">
-              <b>Transparência:</b> NutriCura apoia organização e consistência. Não promete cura ou resultados médicos.
-            </div>
-          </div>
-
-          <div class="guarantee">
-            <strong>Compra segura</strong>
-            <p>
-              Finalize a compra no seu site oficial. Se quiser aumentar conversão, inclua aqui:
-              “garantia de X dias”, “suporte”, “cancelamento fácil”, etc.
-            </p>
-            <p style="margin-top:10px;">
-              <span class="pill" style="box-shadow:none">🔒 Ambiente seguro</span>
-              <span class="pill" style="box-shadow:none">📲 Acesso rápido</span>
-              <span class="pill" style="box-shadow:none">✅ Simples</span>
-            </p>
-          </div>
+          <a class="btn" data-buy href="#">Ir para pagamento</a>
         </div>
       </div>
     </section>
 
-    <!-- FAQ -->
     <section id="faq">
       <div class="container">
-        <div class="sec-head">
-          <div>
-            <h2>FAQ</h2>
-            <p class="subhead">Respostas curtas para remover objeções e vender.</p>
-          </div>
-          <span class="pill"><span class="dot"></span> Sem enrolação</span>
+        <div class="section-head reveal">
+          <h2>Perguntas rapidas</h2>
         </div>
 
-        <div class="faq" aria-label="Perguntas frequentes">
-          <div class="card qa">
-            <button type="button" aria-expanded="false">
-              <span>Isso substitui médico ou nutricionista?</span><span>＋</span>
-            </button>
-            <div class="a">
-              Não. É uma ferramenta de apoio/organização. Para orientação clínica, diagnóstico e tratamento, procure um profissional.
-            </div>
-          </div>
+        <div class="faq">
+          <details class="reveal">
+            <summary>O valor e mesmo R$ 15,00?</summary>
+            <p>Sim. O valor atual da oferta e <strong id="priceFaq1">R$ 15,00</strong>.</p>
+          </details>
 
-          <div class="card qa">
-            <button type="button" aria-expanded="false">
-              <span>Como recebo acesso depois de pagar?</span><span>＋</span>
-            </button>
-            <div class="a">
-              Após finalizar a compra no site, você segue o fluxo indicado lá (ex.: acesso/liberação). Se quiser, personalize esta resposta conforme seu checkout.
-            </div>
-          </div>
+          <details class="reveal">
+            <summary>Preciso de conhecimento tecnico para usar?</summary>
+            <p>Nao. O material foi pensado para uso direto, com fluxo simples e orientacao pratica.</p>
+          </details>
 
-          <div class="card qa">
-            <button type="button" aria-expanded="false">
-              <span>O NutriCura garante resultados?</span><span>＋</span>
-            </button>
-            <div class="a">
-              Não prometemos resultados médicos. O foco é reduzir atrito e aumentar consistência com organização e hábitos.
-            </div>
-          </div>
+          <details class="reveal">
+            <summary>O NutriCura substitui consulta profissional?</summary>
+            <p>Nao. O produto e um apoio de organizacao e constancia. Nao substitui acompanhamento medico ou nutricional.</p>
+          </details>
 
-          <div class="card qa">
-            <button type="button" aria-expanded="false">
-              <span>O preço é R$ 15,00 mesmo?</span><span>＋</span>
-            </button>
-            <div class="a">
-              Sim — é o preço exibido nesta página. Se você mudar o valor, basta editar a variável <b>NUTRICURA_PRICE</b> no topo do HTML.
-            </div>
-          </div>
+          <details class="reveal">
+            <summary>Como faco para comprar?</summary>
+            <p>Clique em qualquer botao "Comprar" desta pagina para ir ao checkout oficial.</p>
+          </details>
         </div>
       </div>
     </section>
 
-    <!-- CTA FINAL -->
-    <section id="cta-final">
+    <section class="final">
       <div class="container">
-        <div class="final">
-          <div>
-            <h3>Comece hoje por <span id="priceFinal">R$ 15,00</span></h3>
-            <p>
-              Se a rotina é o problema, a solução é diminuir atrito. NutriCura te dá receitas, planejamento e motivação leve
-              para você repetir o que funciona.
-            </p>
-          </div>
-          <div style="display:flex; gap:10px; flex-wrap:wrap">
-            <a class="btn btn-primary" data-buy href="#">Comprar agora</a>
-            <a class="btn btn-soft" href="#por-dentro">Ver telas</a>
-          </div>
+        <div class="panel reveal">
+          <h3>Se sua dificuldade e manter ritmo, comece com um plano simples.</h3>
+          <p>
+            NutriCura reune receitas, planejamento e tarefas em um fluxo direto.
+            Voce sabe o que fazer hoje e consegue repetir amanha.
+          </p>
+          <a class="btn btn-primary" data-buy href="#">Garantir acesso por <span id="priceFinal">R$ 15,00</span></a>
         </div>
-
-        <p class="hint">
-          Quer converter mais? Coloque aqui: “Garantia de X dias” e “Suporte via WhatsApp/Email”.
-        </p>
       </div>
     </section>
-
-    <footer>
-      <div class="container foot">
-        <div>© <span id="year"></span> NutriCura. Todos os direitos reservados.</div>
-        <div style="display:flex; gap:12px; flex-wrap:wrap">
-          <!-- TODO: links reais -->
-          <a href="#">Privacidade</a>
-          <a href="#">Termos</a>
-          <a href="mailto:contato@seu-dominio.com">Contato</a>
-        </div>
-      </div>
-    </footer>
   </main>
 
-  <!-- Sticky CTA (mobile) -->
-  <div class="stickyCta" aria-hidden="false">
-    <div class="bar">
-      <div class="txt">
-        NutriCura — <span id="priceSticky">R$ 15,00</span>
-        <span>+100 receitas • planner • tarefas</span>
-      </div>
-      <a class="btn btn-primary" data-buy href="#" style="padding:10px 12px">Comprar</a>
+  <footer>
+    <div class="container">
+      <strong>NutriCura</strong> - Produto digital para apoio de rotina alimentar.<br />
+      Aviso: nao substitui orientacao medica ou nutricional.
     </div>
-  </div>
+  </footer>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <div class="lb-backdrop" id="lbClose"></div>
-    <div class="lb-dialog">
-      <div class="lb-panel" role="dialog" aria-modal="true" aria-label="Visualizar imagem">
-        <div class="lb-head">
-          <strong id="lbTitle">Prévia</strong>
-          <button class="icon-btn" id="lbX" aria-label="Fechar">✕</button>
-        </div>
-        <img class="lb-img" id="lbImg" alt="Visualização ampliada" />
-      </div>
+  <div class="sticky-buy" aria-hidden="false">
+    <div class="txt">
+      <span>Acesso imediato</span>
+      <strong id="priceSticky">R$ 15,00</strong>
     </div>
+    <a class="btn" data-buy href="#">Comprar</a>
   </div>
 
   <script>
-    (function(){
-      const $ = (q, el=document) => el.querySelector(q);
-      const $$ = (q, el=document) => Array.from(el.querySelectorAll(q));
-
-      // Ano
-      $("#year").textContent = new Date().getFullYear();
-
-      // Aplica preço em todos os lugares
+    (function () {
+      const buyUrl = window.NUTRICURA_BUY_URL || "https://nutri-cura-app.vercel.app/";
       const price = window.NUTRICURA_PRICE || "R$ 15,00";
-      ["#priceTop","#priceNav","#priceHero","#priceMid","#priceCard","#priceBtn","#priceFinal","#priceSticky"]
-        .forEach(id => { const el=$(id); if(el) el.textContent = price; });
 
-      // Aplica link de compra em todos os botões
-      const buyUrl = window.NUTRICURA_BUY_URL || "#";
-      $$("[data-buy]").forEach(a => {
-        a.setAttribute("href", buyUrl);
-        a.setAttribute("target","_blank");
-        a.setAttribute("rel","noreferrer");
+      const buyButtons = document.querySelectorAll("[data-buy]");
+      buyButtons.forEach((btn) => {
+        btn.setAttribute("href", buyUrl);
+        btn.setAttribute("target", "_blank");
+        btn.setAttribute("rel", "noopener noreferrer");
       });
 
-      // Fechar anúncio
-      $("#announceClose").addEventListener("click", () => $("#announce").style.display = "none");
-
-      // Menu mobile
-      const menuBtn = $("#menuBtn");
-      const mobileMenu = $("#mobileMenu");
-      menuBtn.addEventListener("click", () => {
-        const open = mobileMenu.style.display === "block";
-        mobileMenu.style.display = open ? "none" : "block";
+      [
+        "priceTop",
+        "priceNav",
+        "priceHero",
+        "priceCard",
+        "priceFaq1",
+        "priceFinal",
+        "priceSticky"
+      ].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = price;
       });
-      $$("#mobileMenu a").forEach(a => a.addEventListener("click", () => mobileMenu.style.display = "none"));
 
-      // FAQ accordion
-      $$(".qa").forEach(card => {
-        const btn = card.querySelector("button");
-        btn.addEventListener("click", () => {
-          const open = card.classList.toggle("open");
-          btn.setAttribute("aria-expanded", String(open));
-          btn.lastElementChild.textContent = open ? "–" : "＋";
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("on");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.16 }
+      );
+
+      document.querySelectorAll(".reveal").forEach((el, index) => {
+        el.style.transitionDelay = `${Math.min(index * 50, 260)}ms`;
+        observer.observe(el);
+      });
+
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (event) => {
+          const href = a.getAttribute("href");
+          if (!href || href === "#") return;
+          const target = document.querySelector(href);
+          if (!target) return;
+          event.preventDefault();
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
         });
-      });
-
-      // Copiar link de compra
-      $("#copyLink").addEventListener("click", async () => {
-        try{
-          await navigator.clipboard.writeText(buyUrl);
-          $("#copyLink").textContent = "Link copiado ✅";
-          setTimeout(() => $("#copyLink").textContent = "Copiar link de compra", 1600);
-        }catch(e){
-          alert("Não foi possível copiar automaticamente. Link: " + buyUrl);
-        }
-      });
-
-      // Lightbox da galeria (só UX, não é “função de app”)
-      const lb = $("#lightbox");
-      const lbImg = $("#lbImg");
-      const lbTitle = $("#lbTitle");
-      function openLB(src, title){
-        lb.classList.add("open");
-        lb.setAttribute("aria-hidden","false");
-        lbImg.src = src;
-        lbTitle.textContent = title || "Prévia";
-      }
-      function closeLB(){
-        lb.classList.remove("open");
-        lb.setAttribute("aria-hidden","true");
-        lbImg.src = "";
-      }
-      $$(".shot").forEach(fig => {
-        fig.addEventListener("click", () => {
-          const img = fig.querySelector("img");
-          openLB(img.src, fig.getAttribute("data-title") || "Prévia");
-        });
-      });
-      $("#lbClose").addEventListener("click", closeLB);
-      $("#lbX").addEventListener("click", closeLB);
-      document.addEventListener("keydown", (e) => {
-        if(e.key === "Escape" && lb.classList.contains("open")) closeLB();
       });
     })();
   </script>
-
-  <!--
-    ✅ IMAGENS (IMPORTANTE)
-    Crie a pasta /assets no mesmo lugar deste arquivo e coloque seus prints com estes nomes:
-
-      assets/nc-hero.png
-      assets/nc-dashboard.png
-      assets/nc-tarefas.png
-      assets/nc-planner.png
-      assets/nc-receitas.png
-      assets/nc-recompensas.png
-
-    Se quiser, pode trocar os nomes no HTML também.
-  -->
 </body>
 </html>
