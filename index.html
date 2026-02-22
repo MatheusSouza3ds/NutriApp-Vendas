@@ -1,996 +1,433 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NutriCura - Receitas, planner e rotina por R$ 29,00</title>
-  <meta name="description" content="NutriCura: +100 receitas, tarefas diarias e planner semanal para organizar sua rotina alimentar. Acesso por R$ 29,00." />
-
-  <meta property="og:title" content="NutriCura - Receitas, planner e rotina por R$ 29,00" />
-  <meta property="og:description" content="Tudo em um lugar: receitas, organizacao da semana e pequenas metas para manter constancia." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://seu-dominio.com" />
-  <meta property="og:image" content="https://seu-dominio.com/og-nutricura.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": "NutriCura",
-    "description": "+100 receitas, tarefas diarias, planner semanal e lista de compras para apoiar constancia alimentar.",
-    "brand": {"@type": "Brand", "name": "NutriCura"},
-    "offers": {
-      "@type": "Offer",
-      "priceCurrency": "BRL",
-      "price": "29.00",
-      "availability": "https://schema.org/InStock",
-      "url": "https://nutri-cura-app.vercel.app/"
-    }
-  }
-  </script>
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nutri Cura App - Receitas e planejamento em um so lugar</title>
+  <meta name="description" content="Nutri Cura App: receitas, planner semanal, lista de compras e rotina guiada para manter constancia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #f4f8f2;
-      --bg-soft: #eef4ec;
-      --surface: #ffffff;
-      --text: #132217;
-      --muted: #4b6052;
-      --line: rgba(19, 34, 23, 0.12);
-
-      --brand: #0f9f66;
-      --brand-dark: #0b7e51;
-      --brand-soft: #e3f7ed;
-      --accent: #d9a441;
-
-      --radius-lg: 24px;
-      --radius-md: 16px;
-      --shadow: 0 20px 50px rgba(10, 44, 24, 0.12);
-
-      --max: 1100px;
-    }
-
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
-    body {
-      font-family: "Manrope", "Segoe UI", Arial, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(1200px 500px at 100% -120px, rgba(15, 159, 102, 0.20), transparent 62%),
-        radial-gradient(800px 420px at -10% -180px, rgba(217, 164, 65, 0.16), transparent 58%),
-        var(--bg);
-      line-height: 1.5;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(19, 34, 23, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(19, 34, 23, 0.03) 1px, transparent 1px);
-      background-size: 36px 36px;
-      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.25), transparent 75%);
-      z-index: -1;
-    }
-
-    a { color: inherit; text-decoration: none; }
-    .container { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
-
-    .topline {
-      border-bottom: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(6px);
-    }
-    .topline .container {
-      min-height: 46px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-    .topline strong { color: var(--text); }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      border-bottom: 1px solid var(--line);
-      background: rgba(244, 248, 242, 0.88);
-      backdrop-filter: blur(10px);
-    }
-
-    .nav {
-      min-height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-family: "Sora", "Segoe UI", Arial, sans-serif;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-
-    .brand-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
-      background: linear-gradient(155deg, var(--brand), var(--brand-dark));
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
-      position: relative;
-    }
-
-    .brand-mark::after {
-      content: "";
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      border: 2px solid #fff;
-      border-top: 0;
-      border-left: 0;
-      transform: rotate(45deg);
-      left: 9px;
-      top: 6px;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 14px;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .nav-links a {
-      padding: 8px 10px;
-      border-radius: 10px;
-      transition: background 0.2s ease, color 0.2s ease;
-    }
-
-    .nav-links a:hover {
-      background: var(--brand-soft);
-      color: var(--text);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: var(--surface);
-      padding: 11px 14px;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-      white-space: nowrap;
-    }
-
-    .btn:active { transform: translateY(1px); }
-
-    .btn-primary {
-      color: #fff;
-      border: 0;
-      background: linear-gradient(180deg, var(--brand), var(--brand-dark));
-      box-shadow: 0 12px 26px rgba(15, 159, 102, 0.30);
-    }
-
-    .btn-primary:hover { filter: brightness(1.03); }
-
-    .btn-soft {
-      background: var(--brand-soft);
-      border-color: rgba(15, 159, 102, 0.25);
-      color: var(--brand-dark);
-    }
-
-    .hero {
-      padding: 54px 0 30px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 26px;
-      align-items: center;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--brand-soft);
-      color: var(--brand-dark);
-      border: 1px solid rgba(15, 159, 102, 0.25);
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-weight: 800;
-      font-size: 12px;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      margin: 14px 0 12px;
-      font-family: "Sora", "Segoe UI", Arial, sans-serif;
-      font-size: clamp(32px, 5vw, 56px);
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-    }
-
-    .lead {
-      margin: 0;
-      max-width: 62ch;
-      color: var(--muted);
-      font-size: 17px;
-    }
-
-    .hero-cta {
-      margin-top: 22px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .price-chip {
-      display: inline-flex;
-      align-items: baseline;
-      gap: 10px;
-      border: 1px solid rgba(15, 159, 102, 0.28);
-      border-radius: 14px;
-      background: linear-gradient(180deg, rgba(227, 247, 237, 0.8), #fff);
-      padding: 10px 12px;
-      font-weight: 800;
-    }
-
-    .price-chip b {
-      font-size: 24px;
-      letter-spacing: -0.03em;
-      color: var(--brand-dark);
-    }
-
-    .hero-notes {
-      margin-top: 14px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .hero-notes span {
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: #fff;
-      padding: 8px 10px;
-      font-size: 12px;
-      font-weight: 800;
-      color: #294034;
-    }
-
-    .panel {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow);
-      padding: 22px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .panel::before {
-      content: "";
-      position: absolute;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(15, 159, 102, 0.24), transparent 68%);
-      top: -80px;
-      right: -80px;
-    }
-
-    .mini-title {
-      margin: 0;
-      font-family: "Sora", "Segoe UI", Arial, sans-serif;
-      font-size: 20px;
-      letter-spacing: -0.02em;
-    }
-
-    .mini-list {
-      margin: 14px 0 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
-      gap: 10px;
-    }
-
-    .mini-list li {
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 11px 12px;
-      background: #fff;
-      font-weight: 700;
-      color: #2d4237;
-    }
-
-    .mini-list li strong { color: var(--text); }
-
-    section {
-      padding: 18px 0;
-    }
-
-    .section-head {
-      margin-bottom: 14px;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-family: "Sora", "Segoe UI", Arial, sans-serif;
-      font-size: clamp(26px, 3.2vw, 38px);
-      letter-spacing: -0.03em;
-    }
-
-    .section-head p {
-      margin: 8px 0 0;
-      color: var(--muted);
-      font-size: 16px;
-      max-width: 70ch;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .card {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      padding: 18px;
-      min-height: 190px;
-      display: grid;
-      align-content: start;
-      gap: 10px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 30px rgba(19, 34, 23, 0.10);
-    }
-
-    .card i {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      background: var(--brand-soft);
-      color: var(--brand-dark);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-style: normal;
-      font-weight: 900;
-      font-size: 14px;
-    }
-
-    .card h3 {
-      margin: 0;
-      font-size: 18px;
-      letter-spacing: -0.02em;
-    }
-
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .step {
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      background: #fff;
-      padding: 18px;
-    }
-
-    .step .n {
-      display: inline-flex;
-      width: 30px;
-      height: 30px;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      background: var(--text);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 900;
-      margin-bottom: 12px;
-    }
-
-    .step h3 {
-      margin: 0 0 8px;
-      font-size: 18px;
-      letter-spacing: -0.02em;
-    }
-
-    .step p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .checklist {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      padding: 18px;
-    }
-
-    .checklist h3 {
-      margin: 0 0 10px;
-      font-size: 19px;
-      letter-spacing: -0.02em;
-    }
-
-    .checklist ul {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
-      gap: 8px;
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .checklist li::before {
-      content: "OK";
-      display: inline-flex;
-      width: 24px;
-      height: 24px;
-      border-radius: 8px;
-      background: var(--brand-soft);
-      color: var(--brand-dark);
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 900;
-      margin-right: 8px;
-      vertical-align: middle;
-    }
-
-    .price {
-      margin-top: 14px;
-      background:
-        linear-gradient(180deg, rgba(227, 247, 237, 0.72), #fff),
-        #fff;
-      border: 1px solid rgba(15, 159, 102, 0.28);
-      border-radius: var(--radius-lg);
-      padding: 22px;
-      box-shadow: var(--shadow);
-    }
-
-    .price-top {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .price-top h3 {
-      margin: 0;
-      font-size: 24px;
-      letter-spacing: -0.03em;
-    }
-
-    .amount {
-      font-family: "Sora", "Segoe UI", Arial, sans-serif;
-      font-size: clamp(28px, 4.5vw, 44px);
-      letter-spacing: -0.04em;
-      color: var(--brand-dark);
-      margin: 6px 0 0;
-    }
-
-    .price p {
-      margin: 8px 0 0;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .price ul {
-      margin: 16px 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 700;
-      color: #274033;
-    }
-
-    .price ul li {
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.85);
-      padding: 9px 10px;
-    }
-
-    .faq {
-      margin-top: 10px;
-      display: grid;
-      gap: 8px;
-    }
-
-    details {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 12px 14px;
-    }
-
-    summary {
-      cursor: pointer;
-      font-weight: 800;
-      list-style: none;
-    }
-
-    summary::-webkit-details-marker { display: none; }
-
-    details p {
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .final {
-      padding-top: 10px;
-      padding-bottom: 86px;
-    }
-
-    .final .panel {
-      display: grid;
-      gap: 12px;
-      text-align: center;
-      justify-items: center;
-      padding: 28px;
-    }
-
-    .final h3 {
-      margin: 0;
-      font-family: "Sora", "Segoe UI", Arial, sans-serif;
-      font-size: clamp(28px, 4vw, 44px);
-      letter-spacing: -0.03em;
-      max-width: 20ch;
-    }
-
-    .final p {
-      margin: 0;
-      color: var(--muted);
-      max-width: 58ch;
-      font-size: 15px;
-    }
-
-    footer {
-      border-top: 1px solid var(--line);
-      padding: 26px 0 88px;
-      color: #4f6456;
-      font-size: 13px;
-    }
-
-    .sticky-buy {
-      position: fixed;
-      left: 14px;
-      right: 14px;
-      bottom: 14px;
-      z-index: 40;
-      border: 1px solid rgba(15, 159, 102, 0.3);
-      border-radius: 16px;
-      background: rgba(19, 34, 23, 0.93);
-      color: #ecfff5;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 10px;
-      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.22);
-    }
-
-    .sticky-buy .txt {
-      font-size: 12px;
-      font-weight: 800;
-      line-height: 1.2;
-    }
-
-    .sticky-buy .txt strong {
-      display: block;
-      font-size: 15px;
-      font-family: "Sora", "Segoe UI", Arial, sans-serif;
-      letter-spacing: -0.02em;
-    }
-
-    .sticky-buy .btn {
-      border-color: transparent;
-      background: #fff;
-      color: var(--brand-dark);
-      padding: 10px 14px;
-      font-size: 13px;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
-      will-change: opacity, transform;
-    }
-
-    .reveal.on {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 980px) {
-      .nav-links { display: none; }
-      .hero-grid,
-      .cards,
-      .steps,
-      .split {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding-top: 34px;
-      }
-
-      .card,
-      .step,
-      .checklist {
-        min-height: 0;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .topline .container {
-        min-height: 42px;
-        font-size: 12px;
-      }
-
-      .nav {
-        min-height: 66px;
-      }
-
-      .btn {
-        padding: 10px 12px;
-      }
-
-      .panel,
-      .price,
-      .final .panel {
-        padding: 18px;
-      }
-
-      footer {
-        padding-bottom: 92px;
-      }
-    }
+    :root{--bg:#f5faf6;--paper:#fff;--ink:#13291c;--muted:#4a6154;--line:rgba(11,76,46,.18);--brand:#0b7e51;--brand2:#0f9f66;--navy:#0d4f9a;--navy2:#0a3e79;--cta:#97ad10;--cta2:#7f9800;--danger:#d8434b;--radius:18px;--shadow:0 18px 45px rgba(11,76,46,.14);--max:1120px}
+    *{box-sizing:border-box}html,body{margin:0;padding:0}body{font-family:"Manrope",Arial,sans-serif;color:var(--ink);line-height:1.5;background:radial-gradient(980px 360px at 100% -80px,rgba(12,165,101,.16),transparent 60%),radial-gradient(980px 380px at -10% -90px,rgba(11,76,46,.14),transparent 58%),var(--bg)}
+    a{text-decoration:none;color:inherit}img{max-width:100%;display:block}
+    .container{width:min(var(--max),calc(100% - 30px));margin:0 auto}
+    .top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid rgba(10,62,121,.16);color:var(--navy2);box-shadow:0 8px 22px rgba(6,35,67,.08)}
+    .top .inner{min-height:78px;display:grid;grid-template-columns:1fr auto auto auto;gap:12px;align-items:center;padding:10px 0}
+    .brand{font-family:"Sora",sans-serif;font-size:1.12rem;font-weight:800;text-transform:uppercase;letter-spacing:.01em;color:var(--navy2)}
+    .brand-note{margin:2px 0 0;font-size:.82rem;color:#234d79;font-weight:700}
+    .top-mid{margin:0;font-family:"Sora",sans-serif;font-size:1.02rem;font-weight:700;color:var(--navy2)}
+    .count{display:grid;grid-template-columns:repeat(3,auto);gap:7px}.count div{min-width:58px;padding:7px 6px;border-radius:9px;background:var(--navy2);text-align:center;border:0}
+    .count b{display:block;font-size:1.08rem;line-height:1;color:#fff}.count span{display:block;margin-top:3px;font-size:.64rem;text-transform:uppercase;letter-spacing:.06em;color:#d8e8ff}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:999px;border:0;font-weight:800;text-transform:uppercase;letter-spacing:.02em;background:linear-gradient(180deg,var(--cta),var(--cta2));color:#fff;box-shadow:0 12px 25px rgba(97,121,4,.35);transition:transform .2s ease}.btn:hover{transform:translateY(-2px)}
+    .btn[data-cta]{position:relative;isolation:isolate;animation:ctaGlow 1.45s ease-in-out infinite}
+    .btn[data-cta]::before,.btn[data-cta]::after{content:"";position:absolute;inset:-6px;border-radius:999px;border:3px solid rgba(151,173,16,.72);pointer-events:none;z-index:-1;animation:ctaRing 1.45s ease-out infinite}
+    .btn[data-cta]::after{animation-delay:.72s}
+    @keyframes ctaGlow{0%,100%{box-shadow:0 12px 25px rgba(97,121,4,.35)}50%{box-shadow:0 24px 42px rgba(97,121,4,.62)}}
+    @keyframes ctaRing{0%{transform:scale(1);opacity:.84}75%{transform:scale(1.22);opacity:0}100%{transform:scale(1.22);opacity:0}}
+    .btn-top{padding:11px 22px;font-size:.78rem;white-space:nowrap}
+
+    .hero{padding:56px 0 36px}.hero-box{border:1px solid var(--line);border-radius:24px;background:linear-gradient(90deg,rgba(255,255,255,.97) 0%,rgba(255,255,255,.92) 52%,rgba(255,255,255,.56) 100%),url("https://res.cloudinary.com/dhumwnzwv/image/upload/w_600,q_auto,f_auto/v1770155418/Grilled_chicken_with_202602031850_scvyiu.png");background-size:cover;background-position:center right;box-shadow:var(--shadow);overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center;padding:36px}
+    .pill{display:inline-flex;padding:7px 12px;border-radius:999px;background:rgba(216,67,75,.11);color:var(--danger);font-size:.76rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+    h1,h2,h3{font-family:"Sora",sans-serif;line-height:1.15}h1{margin:14px 0 12px;font-size:clamp(2rem,4.8vw,3rem);letter-spacing:-.02em}h1 .focus{color:var(--navy2)}
+    p{margin:0 0 8px;color:var(--muted)}
+    .list{margin:17px 0 18px;padding:0;list-style:none;display:grid;gap:10px}.list li{display:grid;grid-template-columns:27px 1fr;gap:10px;align-items:start}
+    .dot{width:27px;height:27px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:rgba(13,79,154,.11);color:var(--navy2);font-weight:800;font-size:.85rem}
+    .hero-trust{margin-top:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .hero-mini{padding:11px 8px;border:1px solid rgba(13,79,154,.18);border-radius:12px;background:#fff;box-shadow:0 8px 20px rgba(7,45,90,.08);text-align:center}
+    .hero-mini i{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:999px;background:rgba(13,79,154,.12);color:var(--navy2);font-style:normal;font-size:.65rem;font-weight:900;margin-bottom:6px}
+    .hero-mini b{display:block;font-size:.78rem;line-height:1.2;color:var(--navy2)}
+    .hero-price{margin-top:13px;display:flex;align-items:stretch;max-width:520px}
+    .off-tag{display:grid;align-content:center;justify-items:center;min-width:86px;border-radius:12px 0 0 12px;background:linear-gradient(180deg,#9fba11,#88a403);color:#fff;padding:8px 8px;box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+    .off-tag b{font-family:"Sora",sans-serif;font-size:1.7rem;line-height:1}
+    .off-tag span{font-size:.72rem;font-weight:800;letter-spacing:.07em}
+    .price-strip{flex:1;padding:9px 16px;border-radius:0 14px 14px 0;background:linear-gradient(180deg,var(--navy),var(--navy2));color:#fff;display:grid;align-content:center}
+    .price-strip p{margin:0;color:#d2e5ff;font-size:1.02rem;font-weight:700;line-height:1.1}
+    .price-strip strong{display:block;margin-top:1px;font-family:"Sora",sans-serif;font-size:2.14rem;line-height:1.02;letter-spacing:-.02em}
+    .hero-media{display:grid;gap:12px;justify-items:center}.card{border:1px solid var(--line);background:#fff;border-radius:16px;box-shadow:0 12px 30px rgba(11,76,46,.1)}
+    .book{padding:14px;width:min(420px,100%)}.off{overflow:hidden;width:min(360px,95%)}
+
+    .trust{padding:22px 0 8px}.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.trust-item{padding:14px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 8px 20px rgba(11,76,46,.08);text-align:center}
+    .trust-item b{display:block;color:var(--brand);font-size:.94rem}.trust-item span{font-size:.84rem;color:var(--muted)}
+
+    .section{padding:64px 0}.alt{background:linear-gradient(180deg,rgba(11,126,81,.06),rgba(255,255,255,0));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .eyebrow{margin:0 0 8px;color:var(--brand);font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+    .title{margin:0 0 12px;font-size:clamp(1.5rem,3.4vw,2.35rem)}
+    .subtitle{margin:0;color:var(--muted);max-width:760px}
+
+    .grid-2{margin-top:24px;display:grid;gap:14px;grid-template-columns:repeat(2,1fr)}
+    .grid-3{margin-top:24px;display:grid;gap:14px;grid-template-columns:repeat(3,1fr)}
+    .item{padding:16px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 8px 20px rgba(11,76,46,.08)}
+    .item h3{margin:0 0 7px;font-size:1.01rem;color:var(--brand)}.item p{margin:0;font-size:.93rem}
+    .num{width:34px;height:34px;border-radius:999px;background:linear-gradient(180deg,var(--brand2),var(--brand));color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:800;box-shadow:0 8px 17px rgba(11,76,46,.35);margin-bottom:10px}
+
+    .testi-grid{margin-top:24px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .testi{padding:16px;border:1px solid rgba(13,79,154,.2);border-radius:14px;background:#fff;box-shadow:0 10px 26px rgba(7,45,90,.1)}
+    .testi .rate{display:inline-flex;padding:4px 9px;border-radius:999px;background:rgba(151,173,16,.15);color:#5a6f00;font-size:.72rem;font-weight:900;letter-spacing:.06em}
+    .testi p{margin:10px 0 8px;color:#24435f;font-weight:600}
+    .testi b{display:block;color:var(--navy2);font-size:.9rem}
+    .testi span{display:block;font-size:.8rem;color:#607c97}
+    .depo-wrap{margin-top:16px;display:grid;grid-template-columns:repeat(7,minmax(210px,1fr));gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}
+    .depo{scroll-snap-align:start;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#fff;box-shadow:0 8px 20px rgba(11,76,46,.08)}
+    .depo img{aspect-ratio:3/4;object-fit:cover;width:100%}
+
+    .bonus{margin-top:24px;display:grid;grid-template-columns:.95fr 1.05fr;gap:14px}
+    .bonus-main{padding:18px}.tag{display:inline-flex;padding:5px 10px;border-radius:999px;background:rgba(12,165,101,.13);color:#067048;font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+    .bonus-main h3{margin:10px 0 8px;font-size:1.32rem;color:var(--brand)}
+    .bonus-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.bonus-card{padding:14px}
+
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .check{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:9px}.check li{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start}
+    .ico{width:26px;height:26px;border-radius:8px;background:rgba(11,126,81,.1);color:var(--brand);display:inline-flex;align-items:center;justify-content:center;font-weight:800}
+
+    .offer-box{border:1px solid var(--line);border-radius:24px;background:linear-gradient(180deg,#fff,#f3fcf6);box-shadow:var(--shadow);overflow:hidden}
+    .offer-grid{padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .badge{display:inline-flex;padding:6px 11px;border-radius:999px;background:rgba(216,67,75,.11);color:var(--danger);font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+    .old{margin:8px 0 0;text-decoration:line-through;color:#7e91a8;font-weight:700}.now{margin:2px 0 0;color:var(--brand);font-family:"Sora",sans-serif;font-size:clamp(1.95rem,4.7vw,2.8rem)}
+    .count2{margin-top:10px}.count2 p{margin:0 0 7px;color:var(--danger);font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em}
+    .count2 .row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.count2 .row div{padding:8px;border-radius:10px;background:#fff;border:1px solid var(--line);text-align:center}
+    .count2 .row b{display:block;color:var(--brand);font-size:1.16rem;line-height:1}.count2 .row span{display:block;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+    details{border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 8px 20px rgba(11,76,46,.07);overflow:hidden}
+    summary{list-style:none;cursor:pointer;padding:14px 42px 14px 14px;font-weight:800;color:var(--brand);position:relative}summary::-webkit-details-marker{display:none}
+    summary::after{content:"+";position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:1.15rem}details[open] summary::after{content:"-"}
+    .faq{border-top:1px solid var(--line);padding:0 14px 14px;color:var(--muted);font-size:.93rem}
+
+    .about{padding:22px;display:grid;grid-template-columns:.8fr 1.2fr;gap:18px}
+    footer{margin-top:64px;padding:32px 0 52px;background:#10291d;color:rgba(255,255,255,.88);border-top:1px solid rgba(255,255,255,.1)}footer p{margin:0;font-size:.84rem;line-height:1.65}
+
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .45s ease,transform .45s ease}.reveal.show{opacity:1;transform:none}
+
+    @media (max-width:1024px){.hero-grid,.bonus,.split,.offer-grid,.about{grid-template-columns:1fr}.hero-media{order:-1}}
+    @media (max-width:900px){.top .inner{grid-template-columns:1fr;gap:8px}.top-mid{font-size:.92rem}.grid-2,.grid-3,.bonus-grid,.trust-grid,.hero-trust,.testi-grid{grid-template-columns:1fr}.section{padding:52px 0}}
+    @media (max-width:640px){.btn{width:100%}.hero-grid{padding:24px 18px}.offer-grid,.about{padding:16px}.hero-price{max-width:100%}.off-tag{min-width:74px}.off-tag b{font-size:1.4rem}.price-strip p{font-size:.9rem}.price-strip strong{font-size:1.7rem}}
+    @media (prefers-reduced-motion:reduce){.btn[data-cta],.btn[data-cta]::before,.btn[data-cta]::after{animation:none!important}}
   </style>
 </head>
 <body>
-  <script>
-    window.NUTRICURA_BUY_URL = "https://nutri-cura-app.vercel.app/";
-    window.NUTRICURA_PRICE = "R$ 29,00";
-  </script>
-
-  <div class="topline">
-    <div class="container">
-      <span>Oferta direta: <strong id="priceTop">R$ 29,00</strong></span>
-      <span>Produto digital para apoio de rotina alimentar</span>
-    </div>
-  </div>
-
-  <header>
-    <div class="container nav">
-      <a class="brand" href="#topo" aria-label="Ir para o topo">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span>NutriCura</span>
-      </a>
-
-      <nav class="nav-links" aria-label="Navegacao principal">
-        <a href="#beneficios">Beneficios</a>
-        <a href="#como">Como funciona</a>
-        <a href="#preco">Preco</a>
-        <a href="#faq">FAQ</a>
-      </nav>
-
-      <a class="btn btn-primary" data-buy href="#">Comprar por <span id="priceNav">R$ 29,00</span></a>
+  <header class="top">
+    <div class="container inner">
+      <div>
+        <div class="brand">Nutri Cura App</div>
+        <p class="brand-note">Oferta oficial de 55% por tempo limitado</p>
+      </div>
+      <p class="top-mid">Desconto Exclusivo</p>
+      <div class="count" aria-label="Contador da oferta">
+        <div><b data-hours>--</b><span>hrs</span></div>
+        <div><b data-minutes>--</b><span>min</span></div>
+        <div><b data-seconds>--</b><span>seg</span></div>
+      </div>
+      <a class="btn btn-top" data-cta href="#">Aproveitar desconto de 55%</a>
     </div>
   </header>
 
-  <main id="topo">
+  <main>
     <section class="hero">
-      <div class="container hero-grid">
-        <div class="reveal">
-          <span class="eyebrow">Receitas + planejamento + constancia</span>
-          <h1>Mais organizacao na alimentacao, sem complicar sua rotina.</h1>
-          <p class="lead">
-            O NutriCura junta o que normalmente fica espalhado: ideias de receitas, tarefas do dia,
-            planner semanal e lista de compras. Menos decisao, mais execucao.
-          </p>
-
-          <div class="hero-cta">
-            <a class="btn btn-primary" data-buy href="#">Quero acesso agora</a>
-            <a class="btn btn-soft" href="#beneficios">Ver o que inclui</a>
-            <span class="price-chip">Acesso unico por <b id="priceHero">R$ 29,00</b></span>
-          </div>
-
-          <div class="hero-notes">
-            <span>+100 receitas com filtros</span>
-            <span>Planner semanal simples</span>
-            <span>Tarefas curtas para manter ritmo</span>
-          </div>
-        </div>
-
-        <aside class="panel reveal" aria-label="Resumo do produto">
-          <h2 class="mini-title">O que voce recebe</h2>
-          <ul class="mini-list">
-            <li><strong>Receitas filtradas</strong> por preferencia, tempo e estilo.</li>
-            <li><strong>Lista de compras</strong> para reduzir esquecimento.</li>
-            <li><strong>Planner da semana</strong> para visualizar o todo.</li>
-            <li><strong>Sistema de metas</strong> para manter consistencia diaria.</li>
-          </ul>
-        </aside>
-      </div>
-    </section>
-
-    <section id="beneficios">
       <div class="container">
-        <div class="section-head reveal">
-          <h2>Limpo no visual, pratico no uso</h2>
-          <p>Tudo foi organizado para voce entender rapido o que fazer em cada etapa da semana.</p>
-        </div>
+        <article class="hero-box">
+          <div class="hero-grid">
+            <div class="reveal">
+              <span class="pill">Oferta relampago de 55% OFF</span>
+              <h1>Chega de perder tempo e energia decidindo o que comer <span class="focus">todos os dias</span>.</h1>
+              <p>Com o Nutri Cura App, voce organiza sua alimentacao em minutos e segue uma rotina mais leve, previsivel e constante.</p>
+              <p>Receitas, planner semanal e tarefas guiadas em um fluxo simples para executar.</p>
 
-        <div class="cards">
-          <article class="card reveal">
-            <i>01</i>
-            <h3>Receitas objetivas</h3>
-            <p>Escolha por condicao, tipo de alimentacao ou tempo disponivel no dia.</p>
-          </article>
+              <ul class="list">
+                <li><span class="dot">1</span><span>Mais de 100 receitas com filtros por objetivo, restricao e tempo.</span></li>
+                <li><span class="dot">2</span><span>Planner semanal com lista de compras organizada automaticamente.</span></li>
+                <li><span class="dot">3</span><span>Tarefas diarias para executar sem sobrecarga e manter constancia.</span></li>
+              </ul>
 
-          <article class="card reveal">
-            <i>02</i>
-            <h3>Planejamento claro</h3>
-            <p>Monte sua semana em minutos e pare de decidir tudo do zero todos os dias.</p>
-          </article>
+              <a class="btn" data-cta href="#">Quero meu acesso agora</a>
 
-          <article class="card reveal">
-            <i>03</i>
-            <h3>Rotina guiada</h3>
-            <p>Tarefas curtas ajudam voce a continuar mesmo nos dias corridos.</p>
-          </article>
+              <div class="hero-trust">
+                <article class="hero-mini"><i>OK</i><b>Compra 100% segura</b></article>
+                <article class="hero-mini"><i>OK</i><b>Satisfacao garantida</b></article>
+                <article class="hero-mini"><i>OK</i><b>Garantia incondicional</b></article>
+                <article class="hero-mini"><i>OK</i><b>Acesso imediato</b></article>
+              </div>
 
-          <article class="card reveal">
-            <i>04</i>
-            <h3>Compras sem atrito</h3>
-            <p>Veja o que falta e organize compras com base no que planejou.</p>
-          </article>
-        </div>
+              <div class="hero-price">
+                <div class="off-tag"><b>55%</b><span>OFF</span></div>
+                <div class="price-strip">
+                  <p>DE R$ <span data-old>67,00</span></p>
+                  <strong>R$ <span data-now>29,00</span></strong>
+                </div>
+              </div>
+              <p style="margin-top:10px;color:var(--danger);font-weight:700;font-size:.84rem" data-offer-status>Oferta ativa neste navegador</p>
+            </div>
+
+            <aside class="hero-media reveal">
+              <div class="card book">
+                <img loading="lazy" src="https://res.cloudinary.com/dhumwnzwv/image/upload/v1770148634/Low_carb_green_2k_202602031656_ubzqet.jpg" alt="Foto de receita do Nutri Cura">
+              </div>
+              <div class="card off">
+                <img loading="lazy" src="https://res.cloudinary.com/dhumwnzwv/image/upload/w_600,q_auto,f_auto/Focus_more_on_2k_202602031755_aosl79.jpg" alt="Foto de refeicao do Nutri Cura">
+              </div>
+            </aside>
+          </div>
+        </article>
       </div>
     </section>
 
-    <section id="como">
+    <section class="trust">
+      <div class="container trust-grid reveal">
+        <div class="trust-item"><b>Compra 100% segura</b><span>Checkout Kiwify protegido</span></div>
+        <div class="trust-item"><b>Acesso imediato</b><span>Liberacao apos pagamento</span></div>
+        <div class="trust-item"><b>Garantia incondicional</b><span>7 dias de risco zero</span></div>
+        <div class="trust-item"><b>Atualizacoes inclusas</b><span>Conteudo em evolucao</span></div>
+      </div>
+    </section>
+
+    <section class="section">
       <div class="container">
-        <div class="section-head reveal">
-          <h2>Como funciona em 3 passos</h2>
-          <p>Fluxo simples para comecar no mesmo dia em que adquirir o acesso.</p>
-        </div>
+        <p class="eyebrow reveal">O que voce encontra no app</p>
+        <h2 class="title reveal">Um sistema completo para rotina alimentar.</h2>
+        <p class="subtitle reveal">Nutri Cura nao e apenas receita. E planejamento + execucao para voce manter constancia com menos desgaste.</p>
 
-        <div class="steps">
-          <article class="step reveal">
-            <span class="n">1</span>
-            <h3>Escolha seu foco</h3>
-            <p>Defina preferencias e veja as receitas mais alinhadas ao seu momento.</p>
-          </article>
-
-          <article class="step reveal">
-            <span class="n">2</span>
-            <h3>Monte a semana</h3>
-            <p>Organize refeicoes no planner e gere uma lista de compras objetiva.</p>
-          </article>
-
-          <article class="step reveal">
-            <span class="n">3</span>
-            <h3>Siga as tarefas</h3>
-            <p>Avance com pequenas metas diarias para manter consistencia sem sobrecarga.</p>
-          </article>
+        <div class="grid-2">
+          <article class="item reveal"><h3>Biblioteca com +100 receitas</h3><p>Opcoes variadas para reduzir repeticao e manter aderencia.</p></article>
+          <article class="item reveal"><h3>Filtros inteligentes</h3><p>Encontre receitas por perfil, preferencia e tempo disponivel.</p></article>
+          <article class="item reveal"><h3>Planner semanal</h3><p>Visualize refeicoes da semana e pare de decidir tudo na hora.</p></article>
+          <article class="item reveal"><h3>Lista de compras</h3><p>Organizacao clara para comprar so o necessario.</p></article>
+          <article class="item reveal"><h3>Tarefas diarias</h3><p>Metas curtas para manter constancia mesmo com rotina corrida.</p></article>
+          <article class="item reveal"><h3>Progresso e recompensas</h3><p>Acompanhe sua evolucao e mantenha motivacao sem pressao.</p></article>
         </div>
       </div>
     </section>
 
-    <section>
+    <section class="section alt">
+      <div class="container">
+        <p class="eyebrow reveal">Como funciona</p>
+        <h2 class="title reveal">Fluxo simples para usar todos os dias.</h2>
+        <p class="subtitle reveal">Em minutos voce define a semana e executa com clareza.</p>
+
+        <div class="grid-3">
+          <article class="item reveal"><span class="num">1</span><h3>Escolha seu foco</h3><p>Filtre receitas conforme seu momento e objetivo.</p></article>
+          <article class="item reveal"><span class="num">2</span><h3>Monte a semana</h3><p>Organize refeicoes no planner e gere a lista de compras.</p></article>
+          <article class="item reveal"><span class="num">3</span><h3>Execute com constancia</h3><p>Siga tarefas curtas e mantenha ritmo sem sobrecarregar.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="eyebrow reveal">Depoimentos e provas</p>
+        <h2 class="title reveal">Quem entra no Nutri Cura relata mais constancia em poucos dias.</h2>
+        <p class="subtitle reveal">Oferta forte, mas com base em resultado pratico: menos improviso e mais execucao.</p>
+
+        <div class="testi-grid">
+          <article class="testi reveal">
+            <span class="rate">5.0 de 5</span>
+            <p>"Em menos de uma semana eu parei de pedir delivery quase todo dia. O planner me destravou."</p>
+            <b>Mariana A.</b>
+            <span>Sao Paulo - SP</span>
+          </article>
+          <article class="testi reveal">
+            <span class="rate">5.0 de 5</span>
+            <p>"Antes eu travava no que comer. Agora abro o app e executo. Ficou muito mais simples manter ritmo."</p>
+            <b>Fernanda C.</b>
+            <span>Belo Horizonte - MG</span>
+          </article>
+          <article class="testi reveal">
+            <span class="rate">4.9 de 5</span>
+            <p>"Lista de compras e receitas filtradas economizaram meu tempo. Foi o que faltava na minha rotina."</p>
+            <b>Juliana R.</b>
+            <span>Curitiba - PR</span>
+          </article>
+        </div>
+
+        <div class="depo-wrap reveal" aria-label="Galeria de fotos do Nutri Cura">
+          <article class="depo"><img loading="lazy" src="https://res.cloudinary.com/dhumwnzwv/image/upload/w_600,q_auto,f_auto/Focus_more_on_2k_202602031755_aosl79.jpg" alt="Receita Nutri Cura 1"></article>
+          <article class="depo"><img loading="lazy" src="https://res.cloudinary.com/dhumwnzwv/image/upload/w_600,q_auto,f_auto/Zucchini_spaghetti_bolognese_2k_202602031759_iycxyh.jpg" alt="Receita Nutri Cura 2"></article>
+          <article class="depo"><img loading="lazy" src="https://res.cloudinary.com/dhumwnzwv/image/upload/w_600,q_auto,f_auto/v1770154719/Spinach_and_white_202602031838_yrefb5.jpg" alt="Receita Nutri Cura 3"></article>
+          <article class="depo"><img loading="lazy" src="https://res.cloudinary.com/dhumwnzwv/image/upload/w_600,q_auto,f_auto/v1770154936/Tuna_and_chickpea_202602031842_s7u6to.png" alt="Receita Nutri Cura 4"></article>
+          <article class="depo"><img loading="lazy" src="https://res.cloudinary.com/dhumwnzwv/image/upload/w_600,q_auto,f_auto/v1770155418/Grilled_chicken_with_202602031850_scvyiu.png" alt="Receita Nutri Cura 5"></article>
+          <article class="depo"><img loading="lazy" src="https://res.cloudinary.com/dhumwnzwv/image/upload/w_600,q_auto,f_auto/v1770212148/Lettuce_wrap_with_202602041034_ghoaa8.png" alt="Receita Nutri Cura 6"></article>
+          <article class="depo"><img loading="lazy" src="https://res.cloudinary.com/dhumwnzwv/image/upload/v1770148634/Low_carb_green_2k_202602031656_ubzqet.jpg" alt="Receita Nutri Cura 7"></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container">
+        <p class="eyebrow reveal">Recursos extras</p>
+        <h2 class="title reveal">Ferramentas para facilitar sua semana.</h2>
+
+        <div class="bonus">
+          <article class="item bonus-main reveal">
+            <span class="tag">Destaque</span>
+            <h3>Planner Nutri Cura</h3>
+            <p>Visual unico para organizar cafe, almoco, jantar e lanches da semana.</p>
+            <div class="card" style="overflow:hidden"><img loading="lazy" src="https://res.cloudinary.com/dhumwnzwv/image/upload/v1770148634/Low_carb_green_2k_202602031656_ubzqet.jpg" alt="Planner Nutri Cura"></div>
+          </article>
+          <div class="bonus-grid">
+            <article class="item bonus-card reveal"><span class="tag">Extra 2</span><h3>Lista inteligente</h3><p>Compras objetivas com base no que voce planejou.</p></article>
+            <article class="item bonus-card reveal"><span class="tag">Extra 3</span><h3>Rotina guiada</h3><p>Passos diarios para executar sem sobrecarga.</p></article>
+            <article class="item bonus-card reveal"><span class="tag">Extra 4</span><h3>Checklist semanal</h3><p>Controle simples para manter consistencia.</p></article>
+            <article class="item bonus-card reveal"><span class="tag">Acesso</span><h3>Liberacao imediata</h3><p>Pagamento aprovado e app disponivel na hora.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
       <div class="container split">
-        <article class="checklist reveal">
-          <h3>Indicado para quem quer:</h3>
-          <ul>
-            <li>ter direcao na alimentacao sem perder tempo</li>
-            <li>reduzir improviso durante a semana</li>
-            <li>unir receitas e planejamento em um lugar so</li>
-            <li>manter constancia com metas simples</li>
+        <article class="item reveal">
+          <p class="eyebrow">Voce passa por isso?</p>
+          <h2 class="title" style="margin-bottom:8px">Dificuldade para manter constancia na alimentacao.</h2>
+          <ul class="check">
+            <li><span class="ico">+</span><span>Perde tempo decidindo o que preparar em cima da hora.</span></li>
+            <li><span class="ico">+</span><span>Compra sem planejamento e acaba desperdicando alimentos.</span></li>
+            <li><span class="ico">+</span><span>Comeca bem e perde ritmo quando a rotina aperta.</span></li>
+            <li><span class="ico">+</span><span>Quer estrutura simples para seguir sem estresse.</span></li>
           </ul>
         </article>
-
-        <article class="checklist reveal">
-          <h3>Inclui no acesso:</h3>
-          <ul>
-            <li>biblioteca com mais de 100 receitas</li>
-            <li>filtros por contexto e preferencia</li>
-            <li>planner semanal com organizacao visual</li>
-            <li>lista de compras e tarefas diarias</li>
-          </ul>
+        <article class="item reveal" style="display:grid;align-content:start;gap:10px">
+          <img loading="lazy" class="card" src="https://res.cloudinary.com/dhumwnzwv/image/upload/w_600,q_auto,f_auto/v1770154936/Tuna_and_chickpea_202602031842_s7u6to.png" alt="Receita do Nutri Cura" style="border-radius:12px;overflow:hidden">
+          <p style="margin:0">Com o Nutri Cura App, voce transforma intencao em execucao com um plano pratico.</p>
         </article>
       </div>
     </section>
 
-    <section id="preco">
+    <section class="section alt">
       <div class="container">
-        <div class="price reveal">
-          <div class="price-top">
-            <h3>Preco unico, sem surpresa</h3>
-            <a class="btn btn-primary" data-buy href="#">Comprar agora</a>
+        <article class="offer-box">
+          <div class="offer-grid">
+            <div class="reveal">
+              <span class="badge">Oferta oficial com 55% OFF por tempo limitado</span>
+              <h2 class="title" style="margin:10px 0 4px">Comece hoje com o Nutri Cura App</h2>
+              <p class="old">de R$ <span data-old>67,00</span></p>
+              <p class="now">R$ <span data-now>29,00</span></p>
+              <p style="margin:4px 0 8px">Pagamento unico com acesso ao app, receitas, planner e rotina guiada.</p>
+
+              <div class="count2">
+                <p data-offer-status>Oferta ativa neste navegador</p>
+                <div class="row" aria-label="Contador da oferta principal">
+                  <div><b data-hours>--</b><span>hrs</span></div>
+                  <div><b data-minutes>--</b><span>min</span></div>
+                  <div><b data-seconds>--</b><span>seg</span></div>
+                </div>
+              </div>
+
+              <a class="btn" data-cta href="#" style="margin-top:12px">Quero entrar por R$ 29,00</a>
+            </div>
+
+            <aside class="item reveal" style="display:grid;gap:10px;align-content:start">
+              <img loading="lazy" class="card" src="https://res.cloudinary.com/dhumwnzwv/image/upload/w_600,q_auto,f_auto/v1770155418/Grilled_chicken_with_202602031850_scvyiu.png" alt="Foto Nutri Cura" style="border-radius:12px;overflow:hidden">
+              <ul class="check" style="margin-top:0">
+                <li><span class="ico">+</span><span>Mais de 100 receitas com filtros inteligentes.</span></li>
+                <li><span class="ico">+</span><span>Planner semanal com lista de compras.</span></li>
+                <li><span class="ico">+</span><span>Tarefas diarias para manter consistencia.</span></li>
+                <li><span class="ico">+</span><span>Garantia incondicional de 7 dias.</span></li>
+              </ul>
+            </aside>
           </div>
-          <div class="amount" id="priceCard">R$ 29,00</div>
-          <p>Acesso digital ao NutriCura com receitas, planner e recursos de organizacao.</p>
+        </article>
+      </div>
+    </section>
 
-          <ul>
-            <li>Acesso ao conteudo completo do produto</li>
-            <li>Estrutura para planejar e executar sua semana</li>
-            <li>Ferramenta de apoio a rotina alimentar</li>
-          </ul>
-
-          <a class="btn" data-buy href="#">Ir para pagamento</a>
+    <section class="section">
+      <div class="container">
+        <p class="eyebrow reveal">Garantia</p>
+        <h2 class="title reveal">Teste por 7 dias com risco zero.</h2>
+        <div class="split">
+          <article class="item reveal"><img loading="lazy" src="https://res.cloudinary.com/dhumwnzwv/image/upload/w_600,q_auto,f_auto/v1770212148/Lettuce_wrap_with_202602041034_ghoaa8.png" alt="Garantia Nutri Cura"></article>
+          <article class="item reveal">
+            <p>Se o Nutri Cura App nao fizer sentido para sua rotina, solicite reembolso dentro do prazo.</p>
+            <p>Processo simples, sem burocracia. Ou ajuda sua constancia, ou voce nao fica com o risco.</p>
+            <a class="btn" data-cta href="#">Quero testar sem risco</a>
+          </article>
         </div>
       </div>
     </section>
 
-    <section id="faq">
+    <section class="section alt">
       <div class="container">
-        <div class="section-head reveal">
-          <h2>Perguntas rapidas</h2>
-        </div>
-
-        <div class="faq">
-          <details class="reveal">
-            <summary>O valor e mesmo R$ 29,00?</summary>
-            <p>Sim. O valor atual da oferta e <strong id="priceFaq1">R$ 29,00</strong>.</p>
-          </details>
-
-          <details class="reveal">
-            <summary>Preciso de conhecimento tecnico para usar?</summary>
-            <p>Nao. O material foi pensado para uso direto, com fluxo simples e orientacao pratica.</p>
-          </details>
-
-          <details class="reveal">
-            <summary>O NutriCura substitui consulta profissional?</summary>
-            <p>Nao. O produto e um apoio de organizacao e constancia. Nao substitui acompanhamento medico ou nutricional.</p>
-          </details>
-
-          <details class="reveal">
-            <summary>Como faco para comprar?</summary>
-            <p>Clique em qualquer botao "Comprar" desta pagina para ir ao checkout oficial.</p>
-          </details>
+        <p class="eyebrow reveal">Duvidas frequentes</p>
+        <h2 class="title reveal">FAQ</h2>
+        <div class="grid-2" style="margin-top:16px">
+          <details class="reveal" open><summary>O que eu recebo na compra?</summary><div class="faq"><p>Acesso ao Nutri Cura App com receitas, planner semanal, lista de compras e rotina guiada.</p></div></details>
+          <details class="reveal"><summary>Como e o acesso?</summary><div class="faq"><p>Depois da aprovacao no checkout, o acesso e liberado de forma imediata.</p></div></details>
+          <details class="reveal"><summary>Preciso ter conhecimento tecnico?</summary><div class="faq"><p>Nao. O app foi pensado para uso simples, com organizacao clara e objetiva.</p></div></details>
+          <details class="reveal"><summary>Quanto tempo dura o acesso?</summary><div class="faq"><p>O acesso ao produto e liberado de forma continua conforme a oferta vigente.</p></div></details>
+          <details class="reveal"><summary>Tem garantia?</summary><div class="faq"><p>Sim. Garantia incondicional de 7 dias para solicitar reembolso.</p></div></details>
+          <details class="reveal"><summary>Substitui acompanhamento profissional?</summary><div class="faq"><p>Nao. O Nutri Cura e um apoio de rotina e organizacao, nao substitui atendimento medico ou nutricional.</p></div></details>
         </div>
       </div>
     </section>
 
-    <section class="final">
+    <section class="section">
       <div class="container">
-        <div class="panel reveal">
-          <h3>Se sua dificuldade e manter ritmo, comece com um plano simples.</h3>
-          <p>
-            NutriCura reune receitas, planejamento e tarefas em um fluxo direto.
-            Voce sabe o que fazer hoje e consegue repetir amanha.
-          </p>
-          <a class="btn btn-primary" data-buy href="#">Garantir acesso por <span id="priceFinal">R$ 29,00</span></a>
-        </div>
+        <article class="item about reveal">
+          <img loading="lazy" class="card" src="https://res.cloudinary.com/dhumwnzwv/image/upload/w_600,q_auto,f_auto/Zucchini_spaghetti_bolognese_2k_202602031759_iycxyh.jpg" alt="Nutri Cura App" style="border-radius:14px;overflow:hidden">
+          <div>
+            <p class="eyebrow">Sobre o produto</p>
+            <h2 class="title" style="margin-top:0">Nutri Cura App foi criado para simplificar sua rotina alimentar.</h2>
+            <p>O foco e unir receitas, planejamento e execucao em um fluxo facil de seguir no dia a dia.</p>
+            <p>Voce ganha clareza para decidir melhor, com menos atrito e mais constancia durante a semana.</p>
+          </div>
+        </article>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container">
-      <strong>NutriCura</strong> - Produto digital para apoio de rotina alimentar.<br />
-      Aviso: nao substitui orientacao medica ou nutricional.
+    <div class="container" style="display:grid;gap:10px">
+      <p>Nutri Cura App - produto digital para apoio de organizacao alimentar.</p>
+      <p>Aviso: o conteudo nao substitui acompanhamento medico ou nutricional individualizado.</p>
+      <p>&copy; <span id="year"></span> - Todos os direitos reservados | Nutri Cura App.</p>
     </div>
   </footer>
 
-  <div class="sticky-buy" aria-hidden="false">
-    <div class="txt">
-      <span>Acesso imediato</span>
-      <strong id="priceSticky">R$ 29,00</strong>
-    </div>
-    <a class="btn" data-buy href="#">Comprar</a>
-  </div>
-
   <script>
-    (function () {
-      const buyUrl = window.NUTRICURA_BUY_URL || "https://nutri-cura-app.vercel.app/";
-      const price = window.NUTRICURA_PRICE || "R$ 29,00";
+    (function(){
+      var checkout="https://nutri-cura-app.vercel.app/";
+      var priceNow="29,00";
+      var priceOld="67,00";
+      var key="nutricura_deadline_v1";
+      var duration=42000*1000;
 
-      const buyButtons = document.querySelectorAll("[data-buy]");
-      buyButtons.forEach((btn) => {
-        btn.setAttribute("href", buyUrl);
-        btn.setAttribute("target", "_blank");
-        btn.setAttribute("rel", "noopener noreferrer");
-      });
+      document.querySelectorAll("[data-cta]").forEach(function(a){a.href=checkout;a.target="_blank";a.rel="noopener noreferrer"});
+      document.querySelectorAll("[data-now]").forEach(function(n){n.textContent=priceNow});
+      document.querySelectorAll("[data-old]").forEach(function(n){n.textContent=priceOld});
 
-      [
-        "priceTop",
-        "priceNav",
-        "priceHero",
-        "priceCard",
-        "priceFaq1",
-        "priceFinal",
-        "priceSticky"
-      ].forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = price;
-      });
+      function getDeadline(){
+        var saved=Number(localStorage.getItem(key));
+        if(!Number.isFinite(saved)||saved<=Date.now()){saved=Date.now()+duration;localStorage.setItem(key,String(saved));}
+        return saved;
+      }
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("on");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.16 }
-      );
+      var deadline=getDeadline();
 
-      document.querySelectorAll(".reveal").forEach((el, index) => {
-        el.style.transitionDelay = `${Math.min(index * 50, 260)}ms`;
-        observer.observe(el);
-      });
+      function pad(v){return String(v).padStart(2,"0");}
+      function update(){
+        var diff=deadline-Date.now();
+        if(diff<=0){deadline=Date.now()+duration;localStorage.setItem(key,String(deadline));diff=duration;}
+        var t=Math.floor(diff/1000);
+        var h=Math.floor(t/3600),m=Math.floor((t%3600)/60),s=t%60;
+        document.querySelectorAll("[data-hours]").forEach(function(n){n.textContent=pad(h)});
+        document.querySelectorAll("[data-minutes]").forEach(function(n){n.textContent=pad(m)});
+        document.querySelectorAll("[data-seconds]").forEach(function(n){n.textContent=pad(s)});
+        document.querySelectorAll("[data-offer-status]").forEach(function(n){n.textContent="Oferta ativa neste navegador";n.style.color="#d8434b";});
+      }
+      update();
+      setInterval(update,1000);
 
-      document.querySelectorAll('a[href^="#"]').forEach((a) => {
-        a.addEventListener("click", (event) => {
-          const href = a.getAttribute("href");
-          if (!href || href === "#") return;
-          const target = document.querySelector(href);
-          if (!target) return;
-          event.preventDefault();
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
+      document.getElementById("year").textContent=String(new Date().getFullYear());
+
+      document.querySelectorAll("details").forEach(function(el){
+        el.addEventListener("toggle",function(){
+          if(!el.open)return;
+          document.querySelectorAll("details").forEach(function(other){if(other!==el)other.open=false;});
         });
       });
+
+      var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add("show");io.unobserve(e.target);}})},{threshold:.14});
+      document.querySelectorAll(".reveal").forEach(function(el){io.observe(el)});
     })();
   </script>
 </body>
 </html>
-
